@@ -1211,6 +1211,11 @@
         var WA_NUMBER = '97140000000'; // +971 4 000 0000 (fictional)
         var MAP_BASE = 'https://www.google.com/maps?q=Jumeirah+Beach+Road,+Jumeirah+1,+Dubai,+UAE&z=14&output=embed&hl=';
         var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // Phones hand wa.me links to the WhatsApp app; a new tab there is left stuck on about:blank
+        var IS_MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (IS_MOBILE) {
+            document.querySelectorAll('.wa-link, #successWa').forEach(function (a) { a.removeAttribute('target'); });
+        }
 
         // 1. Preloader: hide as soon as the DOM is ready, hard cap ~0.9s
         var preloader = document.getElementById('preloader');
@@ -1750,12 +1755,13 @@
                 note: fields.note.value.trim()
             };
             var url = whatsappUrl(lastBooking);
-            window.open(url, '_blank', 'noopener');
+            if (!IS_MOBILE) window.open(url, '_blank', 'noopener');
             renderSuccess(lastBooking);
             form.hidden = true;
             success.hidden = false;
             success.focus({ preventScroll: true });
             success.closest('.booking-card').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+            if (IS_MOBILE) window.location.href = url;
         });
 
         document.getElementById('bookAnother').addEventListener('click', function () {
