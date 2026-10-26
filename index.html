@@ -1,292 +1,639 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ivory Dental Studio | Aesthetics & Care</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivory Dental Studio | Boutique Dentistry in Jumeirah, Dubai</title>
+    <meta name="description" content="Ivory Dental Studio is a boutique cosmetic and family dental clinic in Jumeirah 1, Dubai. Smile design, Invisalign, implants and laser whitening, with consultations booked on WhatsApp.">
+    <meta name="theme-color" content="#0F172A">
+    <link rel="canonical" href="https://ahmedeldabah.github.io/clinic/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Open Graph / link previews (WhatsApp, Instagram, iMessage) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ivory Dental Studio">
+    <meta property="og:title" content="Ivory Dental Studio | Boutique Dentistry in Jumeirah, Dubai">
+    <meta property="og:description" content="Smile design, Invisalign, implants and laser whitening in a calm, spa-like studio on Jumeirah Beach Road. Book a consultation on WhatsApp.">
+    <meta property="og:url" content="https://ahmedeldabah.github.io/clinic/">
+    <meta property="og:image" content="https://ahmedeldabah.github.io/clinic/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ivory Dental Studio, boutique dentistry in Jumeirah, Dubai">
+    <meta property="og:locale" content="en_AE">
+    <meta property="og:locale:alternate" content="ar_AE">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Apply the saved language before first paint to avoid a layout flip -->
+    <script>
+        document.documentElement.classList.add('js');
+        try {
+            if (localStorage.getItem('ivory-lang') === 'ar') {
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+            }
+        } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
     <style>
         /* --- PREMIUM DARK MODE VARIABLES --- */
         :root {
-            --bg-main: #0F172A; 
-            --bg-sec: #1E293B; 
-            --accent: #D4AF37; 
-            --text-main: #F8FAFC; 
-            --text-muted: #94A3B8; 
-            --whatsapp: #25D366; 
-            --glass: rgba(15, 23, 42, 0.85); 
-            --glass-border: rgba(255, 255, 255, 0.1); 
+            --bg-main: #0F172A;
+            --bg-sec: #1E293B;
+            --bg-deep: #070B14;
+            --accent: #D4AF37;
+            --accent-light: #F1D77A;
+            --accent-soft: rgba(212, 175, 55, 0.12);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --danger: #FCA5A5;
+            --whatsapp: #25D366;
+            --glass: rgba(15, 23, 42, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --input-border: #334155;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --nav-h: 80px;
+            --font-body: 'Montserrat', sans-serif;
+            --font-head: 'Playfair Display', serif;
+        }
+        html[lang="ar"] {
+            --font-body: 'IBM Plex Sans Arabic', 'Montserrat', sans-serif;
+            --font-head: 'Playfair Display', 'IBM Plex Sans Arabic', serif;
         }
 
         /* --- RESET & BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; font-size: 16px; }
-        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--text-main); }
+        html { scroll-behavior: smooth; scroll-padding-top: 72px; font-size: 16px; overflow-x: clip; }
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: var(--font-body); overflow-x: clip; line-height: 1.5; }
+        body.menu-open { overflow: hidden; }
+        h1, h2, h3 { font-family: var(--font-head); color: var(--text-main); font-weight: 600; }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; }
+        button, input, select, textarea { font: inherit; color: inherit; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+        /* Arabic letters must stay joined: never letter-space them */
+        html[lang="ar"] * { letter-spacing: 0 !important; }
+        html[lang="ar"] .icon-arrow { transform: scaleX(-1); }
 
-        /* --- PRELOADER --- */
+        .icon { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .ltr { direction: ltr; unicode-bidi: isolate; }
+
+        /* --- PRELOADER (never blocks for more than ~1s, even without JS) --- */
         #preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-main); z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 1.2s ease, visibility 1.2s; 
+            position: fixed; inset: 0; background: var(--bg-main); z-index: 9999;
+            display: flex; justify-content: center; align-items: center; pointer-events: none;
+            transition: opacity 0.35s ease, visibility 0.35s;
+            animation: preloaderOut 0.3s ease 0.7s forwards;
         }
-        .tooth-loader svg { width: 60px; height: 60px; fill: none; stroke: var(--accent); stroke-width: 2; animation: draw 2s infinite alternate; }
+        #preloader.done { opacity: 0; visibility: hidden; }
+        @keyframes preloaderOut { to { opacity: 0; visibility: hidden; } }
+        .tooth-loader svg { width: 60px; height: 60px; fill: none; stroke: var(--accent); stroke-width: 2; animation: draw 1s infinite alternate; }
         @keyframes draw { 0% { stroke-dasharray: 0, 200; } 100% { stroke-dasharray: 200, 0; } }
 
         /* --- NAVIGATION --- */
         nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 5%;
-            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
-            background: transparent; transition: var(--transition);
+            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); padding: 0 5%;
+            display: flex; justify-content: space-between; align-items: center; gap: 24px; z-index: 1000;
+            transition: height 0.4s ease;
         }
-        nav.scrolled { background: var(--glass); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); padding: 15px 5%; }
-        
-        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
-        .logo-svg { width: 35px; height: 35px; }
-        .logo-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main); transition: var(--transition); letter-spacing: 1px; }
-        .logo-text span { color: var(--accent); }
+        /* Glass layer lives on a pseudo-element so backdrop-filter doesn't trap the fixed mobile menu */
+        nav::before {
+            content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0;
+            background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border); transition: opacity 0.4s ease;
+        }
+        nav.scrolled { height: 66px; }
+        nav.scrolled::before, body.menu-open nav::before { opacity: 1; }
 
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); cursor: pointer; }
-        .nav-links a:hover { color: var(--accent) !important; }
-        
+        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+        .logo-svg { width: 35px; height: 35px; }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main); letter-spacing: 1px; }
+        .logo-text span { color: var(--accent); }
+        .logo-text, .stat-number, .exp-badge span { direction: ltr; unicode-bidi: isolate; }
+        .stat-number, .exp-badge span, .booking-contact a { font-variant-numeric: lining-nums; }
+
+        .nav-links { display: flex; gap: clamp(18px, 2.2vw, 34px); align-items: center; }
+        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); white-space: nowrap; }
+        .nav-links a:hover { color: var(--accent); }
+        html[lang="ar"] .nav-links a { font-size: 0.95rem; }
+
         .btn-book { background: var(--accent); color: var(--bg-main) !important; padding: 10px 24px; border-radius: 50px; font-weight: 700 !important; border: 1px solid var(--accent); }
         .btn-book:hover { background: transparent; color: var(--accent) !important; }
 
-        .hamburger { display: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; transition: var(--transition); }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh; position: relative; display: flex; align-items: center; padding: 0 5%;
-            background: url('https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .lang-toggle {
+            display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px;
+            border: 1px solid var(--glass-border); border-radius: 50px; background: rgba(255,255,255,0.04);
+            color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: var(--transition);
         }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.5) 100%); z-index: 1; }
-        
-        .hero-content { position: relative; z-index: 2; max-width: 600px; color: var(--text-main); }
-        .hero-subtitle { color: var(--accent); text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; display: block; }
-        .hero h1 { font-size: 4.5rem; color: var(--text-main); line-height: 1.1; margin-bottom: 25px; font-weight: 600; }
-        .hero p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; font-weight: 300; opacity: 0.9; color: var(--text-muted); }
-        
-        .hero-cta { display: flex; gap: 20px; flex-wrap: wrap; }
-        .btn-primary { background: var(--accent); color: var(--bg-main); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); border: 2px solid var(--accent); cursor: pointer; text-align: center; }
+        .lang-toggle:hover { border-color: rgba(212,175,55,0.5); }
+        .lang-toggle .sep { opacity: 0.4; }
+        .lang-toggle .ar-glyph { font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 1rem; line-height: 1; }
+        .lang-toggle .on { color: var(--accent); }
+
+        .hamburger {
+            display: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.04); color: var(--text-main); align-items: center; justify-content: center; cursor: pointer;
+        }
+        .hamburger .icon { width: 22px; height: 22px; }
+        .hamburger .i-close { display: none; }
+        .hamburger[aria-expanded="true"] .i-open { display: none; }
+        .hamburger[aria-expanded="true"] .i-close { display: block; }
+
+        /* --- BUTTONS --- */
+        .btn-primary, .btn-secondary {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 16px 32px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); cursor: pointer; text-align: center;
+        }
+        .btn-primary { background: var(--accent); color: var(--bg-main); border: 2px solid var(--accent); }
         .btn-primary:hover { background: transparent; color: var(--accent); }
-        .btn-secondary { background: transparent; color: var(--text-main); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); border: 2px solid var(--text-main); text-align: center; }
+        .btn-secondary { background: transparent; color: var(--text-main); border: 2px solid rgba(248,250,252,0.6); font-weight: 600; }
         .btn-secondary:hover { background: var(--text-main); color: var(--bg-main); }
+        html[lang="ar"] .btn-primary, html[lang="ar"] .btn-secondary { font-size: 1rem; }
 
-        /* --- STATS BAR (Desktop) --- */
-        .stats-bar {
-            position: absolute; bottom: -40px; right: 5%; width: 50%;
-            background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
-            border-radius: 20px; padding: 30px; display: flex; justify-content: space-around; z-index: 10;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        /* --- HERO --- */
+        .hero {
+            position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; isolation: isolate;
+            padding: calc(var(--nav-h) + 30px) 5% 70px;
+            display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 0.5fr); align-items: center; gap: 10px;
+            background:
+                radial-gradient(ellipse 55% 50% at 52% 46%, rgba(59, 92, 158, 0.38), transparent 70%),
+                radial-gradient(ellipse 30% 30% at 52% 62%, rgba(212, 175, 55, 0.10), transparent 70%),
+                linear-gradient(180deg, #0F172A 0%, #121D36 55%, #0F172A 100%);
         }
-        .stat-item { text-align: center; }
-        .stat-number { display: block; font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-main); font-weight: 700; }
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
+        .hero::after { /* soft fade into the next section */
+            content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: -1;
+            background: linear-gradient(to bottom, transparent, var(--bg-main));
+        }
+        .hero-watermark {
+            position: absolute; left: 50%; bottom: -0.17em; transform: translateX(-50%); z-index: -2;
+            font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(7rem, 25vw, 24rem); line-height: 1;
+            white-space: nowrap; pointer-events: none; user-select: none; letter-spacing: 0.02em;
+            background: linear-gradient(180deg, rgba(148, 163, 184, 0.13), rgba(148, 163, 184, 0.02) 75%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
 
-        /* --- SERVICES SECTION --- */
-        .services { padding: 120px 5%; background: var(--bg-main); }
-        .section-header { text-align: center; margin-bottom: 70px; max-width: 600px; margin-inline: auto; }
-        .section-subtitle { color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 10px; }
-        .section-title { font-size: 3rem; color: var(--text-main); margin-bottom: 20px; }
+        .hero-content { position: relative; z-index: 3; max-width: 560px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px 8px 14px; border-radius: 50px;
+            background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-main);
+            font-size: 0.78rem; font-weight: 500; margin-bottom: 26px; backdrop-filter: blur(6px);
+        }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(212,175,55,0.18); flex-shrink: 0; }
+        .hero h1 { font-size: clamp(2.6rem, 5vw, 5.1rem); line-height: 1.04; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 24px; }
+        .hero h1 em { font-style: italic; color: var(--accent); font-weight: 500; }
+        html[lang="ar"] .hero h1 { line-height: 1.3; font-weight: 600; }
+        html[lang="ar"] .hero h1 em { font-style: normal; }
+        .hero-text { font-size: 1.05rem; line-height: 1.7; margin-bottom: 36px; font-weight: 300; color: var(--text-muted); max-width: 470px; }
+        .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-mini-stat { display: flex; align-items: center; gap: 18px; margin-top: 46px; }
+        .hero-mini-stat .stat-number { display: inline-flex; align-items: center; gap: 12px; font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 500; line-height: 1; }
+        .hero-mini-stat .stat-number em { color: var(--accent); font-style: normal; }
+        .hero-mini-stat .stat-label { font-size: 0.82rem; color: var(--text-muted); max-width: 180px; line-height: 1.5; }
 
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        /* Implant visual */
+        .hero-visual { position: relative; z-index: 2; display: flex; justify-content: center; align-items: center; margin-inline: -8%; }
+        .implant-stage {
+            position: relative; width: min(100%, calc((100svh - 150px) * 0.77)); aspect-ratio: 600 / 780;
+            transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .implant {
+            width: 100%; height: 100%; display: block; overflow: visible;
+            -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
+            mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
+        }
+        .implant * { transform-box: fill-box; }
+        .imp-glow { animation: glowPulse 6s ease-in-out infinite alternate; transform-origin: center; }
+        .imp-float { animation: floatY 7s ease-in-out infinite alternate; }
+        .imp-screw { animation: introUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s both; }
+        .imp-abut { animation: introDown 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s both; }
+        .imp-crown-in { animation: introCrown 1.4s cubic-bezier(0.3, 1.25, 0.4, 1) 0.95s both; }
+        .imp-crown { animation: crownHover 4.5s ease-in-out 2.4s infinite alternate; }
+        .imp-crown-shadow { animation: shadowHover 4.5s ease-in-out 2.4s infinite alternate, introFade 0.6s ease 1.8s both; transform-origin: center; }
+        .imp-threads { animation: screwTurn 2.2s linear infinite; }
+        .imp-glint { animation: glint 4.5s ease-in-out 2.4s infinite alternate; }
+        /* Real 3D crown (BodyParts3D molar) rendered over the SVG; the SVG crown is the no-WebGL fallback */
+        .crown-3d { position: absolute; left: 12%; top: -6%; width: 76%; height: 44%; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
+        .crown-3d-ready .crown-3d { opacity: 1; }
+        .crown-3d-ready .imp-crown-in { display: none; }
+        .orbit-line { fill: none; stroke: rgba(226, 232, 240, 0.35); stroke-width: 1.4; }
+        .orbit-back { stroke: rgba(226, 232, 240, 0.16); }
+        .orbit-wrap { animation: introFade 1s ease 1.6s both; }
+
+        @keyframes floatY { from { transform: translateY(6px); } to { transform: translateY(-10px); } }
+        @keyframes glowPulse { from { opacity: 0.7; transform: scale(0.96); } to { opacity: 1; transform: scale(1.04); } }
+        @keyframes introUp { from { opacity: 0; transform: translateY(90px); } to { opacity: 1; transform: none; } }
+        @keyframes introDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: none; } }
+        @keyframes introCrown { from { opacity: 0; transform: translateY(-150px) rotate(-6deg); } to { opacity: 1; transform: none; } }
+        @keyframes introFade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes crownHover { from { transform: translateY(0); } to { transform: translateY(-16px); } }
+        @keyframes shadowHover { from { opacity: 0.55; transform: scale(1); } to { opacity: 0.25; transform: scale(0.85); } }
+        @keyframes screwTurn { from { transform: translateY(0); } to { transform: translateY(20px); } }
+        @keyframes glint { from { opacity: 0.35; transform: translate(0, 0); } to { opacity: 0.95; transform: translate(10px, 8px); } }
+
+        .orbit-chip {
+            position: absolute; display: flex; align-items: center; gap: 12px; padding: 9px 14px;
+            background: rgba(30, 41, 59, 0.62); border: 1px solid rgba(255,255,255,0.14); border-radius: 12px;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            font-size: 0.7rem; white-space: nowrap; animation: introFade 0.8s ease both, chipFloat 5s ease-in-out infinite alternate;
+        }
+        .orbit-chip strong { display: block; font-weight: 600; color: var(--text-main); font-size: 0.74rem; }
+        .orbit-chip small { display: block; color: var(--text-muted); font-size: 0.64rem; margin-top: 2px; }
+        .orbit-chip .chip-price { color: var(--accent); font-weight: 600; font-size: 0.72rem; }
+        .orbit-chip .chip-pin { width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--text-main); background: var(--bg-main); flex-shrink: 0; }
+        .chip-a { left: 0; top: 54%; animation-delay: 1.9s, 1.9s; }
+        .chip-b { right: 0; top: 41%; animation-delay: 2.2s, 2.2s; animation-direction: normal, alternate-reverse; }
+        @keyframes chipFloat { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+
+        /* Hero aside */
+        .hero-aside { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: flex-end; text-align: end; gap: 34px; }
+        .open-status { display: flex; flex-direction: column; gap: 4px; font-size: 0.88rem; color: var(--text-muted); }
+        .open-status .status-line { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; color: var(--text-main); font-weight: 500; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #F87171; box-shadow: 0 0 0 4px rgba(248,113,113,0.18); }
+        .open-status.is-open .status-dot { background: var(--whatsapp); box-shadow: 0 0 0 4px rgba(37,211,102,0.2); animation: livePulse 2s ease-in-out infinite; }
+        @keyframes livePulse { 50% { box-shadow: 0 0 0 7px rgba(37,211,102,0.05); } }
+        .hero-location { text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.88rem; }
+        .hero-location .icon { color: var(--accent); }
+        .hero-stats { display: flex; flex-direction: column; gap: 26px; }
+        .hero-stats .stat-number { display: block; font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 500; line-height: 1; }
+        .hero-stats .stat-label { display: block; margin-top: 6px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
+        .hero-social { display: flex; flex-direction: column; gap: 12px; }
+        .social-btn {
+            width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+            background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-main); transition: var(--transition);
+        }
+        .social-btn:hover { background: var(--accent); color: var(--bg-main); border-color: var(--accent); }
+        .social-btn .icon { width: 19px; height: 19px; }
+
+        /* --- SECTIONS COMMON --- */
+        section { position: relative; }
+        .section-header { text-align: center; margin: 0 auto 64px; max-width: 640px; }
+        .section-header p { color: var(--text-muted); line-height: 1.7; }
+        .section-subtitle { color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-size: 0.82rem; font-weight: 600; display: block; margin-bottom: 12px; }
+        html[lang="ar"] .section-subtitle { font-size: 0.95rem; }
+        .section-title { font-size: clamp(2.1rem, 4vw, 3rem); color: var(--text-main); margin-bottom: 20px; line-height: 1.15; }
+        html[lang="ar"] .section-title { line-height: 1.4; }
+        .container { max-width: 1240px; margin-inline: auto; }
+
+        /* --- SERVICES --- */
+        .services { padding: 110px 5% 100px; background: var(--bg-main); }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
         .service-card {
-            background: var(--bg-sec); border-radius: 15px; padding: 40px 30px; text-align: center;
+            background: var(--bg-sec); border-radius: 18px; padding: 38px 30px 26px; text-align: center;
             transition: var(--transition); position: relative; overflow: hidden; border: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; align-items: center;
         }
         .service-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 0;
             background: rgba(212, 175, 55, 0.05); transition: var(--transition); z-index: 1;
         }
         .service-card:hover::before { height: 100%; }
-        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: rgba(212, 175, 55, 0.3); }
-        
-        .service-icon, .service-card h3, .service-card p { position: relative; z-index: 2; transition: var(--transition); }
-        .service-icon { font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
-        .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--text-main); }
-        .service-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: rgba(212, 175, 55, 0.3); }
+        .service-card > * { position: relative; z-index: 2; }
+        .service-icon { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); margin-bottom: 22px; }
+        .service-icon .icon { width: 34px; height: 34px; stroke-width: 1.5; }
+        .service-card h3 { font-size: 1.45rem; margin-bottom: 14px; }
+        .service-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 24px; }
+        .service-foot {
+            margin-top: auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            padding-top: 18px; border-top: 1px solid var(--glass-border); text-align: start;
+        }
+        .service-price { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
+        .service-price strong { color: var(--accent); font-size: 1.05rem; font-weight: 600; white-space: nowrap; }
+        .service-book {
+            display: inline-flex; align-items: center; gap: 6px; color: var(--text-main); text-decoration: none; font-size: 0.78rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; transition: var(--transition);
+        }
+        .service-book:hover { color: var(--accent); }
+        html[lang="ar"] .service-book { font-size: 0.9rem; }
+        .price-note { text-align: center; color: var(--text-muted); font-size: 0.82rem; margin-top: 28px; }
 
-        /* --- EXPERIENCE / ABOUT SECTION --- */
-        .experience { padding: 100px 5%; display: flex; align-items: center; gap: 60px; background: var(--bg-sec); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
-        .exp-image { flex: 1; position: relative; }
-        .exp-image img { width: 100%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
-        .exp-badge { position: absolute; bottom: -20px; right: -20px; background: var(--bg-main); color: var(--text-main); padding: 30px; border-radius: 50%; width: 150px; height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 5px solid var(--bg-sec); }
+        /* Insurance row */
+        .insurance {
+            margin-top: 56px; padding: 26px 30px; border-radius: 18px; border: 1px solid var(--glass-border);
+            background: linear-gradient(120deg, rgba(212,175,55,0.07), rgba(30,41,59,0.5));
+            display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+        }
+        .insurance-head { display: flex; align-items: center; gap: 16px; }
+        .insurance-head .icon { width: 36px; height: 36px; color: var(--accent); stroke-width: 1.5; }
+        .insurance-head h3 { font-family: var(--font-body); font-size: 1rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        .insurance-head p { color: var(--text-muted); font-size: 0.82rem; margin-top: 4px; }
+        .insurance-badges { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+        .insurance-badges li {
+            padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(212,175,55,0.35);
+            color: var(--text-main); font-size: 0.78rem; font-weight: 500; background: rgba(15,23,42,0.5);
+        }
+
+        /* --- EXPERIENCE --- */
+        .experience { padding: 100px 5%; display: flex; align-items: center; gap: 70px; background: var(--bg-sec); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+        .exp-image { flex: 1; position: relative; min-width: 0; }
+        .exp-image img { width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); aspect-ratio: 4 / 3; object-fit: cover; background: var(--bg-main); }
+        .exp-badge {
+            position: absolute; bottom: -24px; inset-inline-end: -24px; background: var(--bg-main); color: var(--text-main);
+            border-radius: 50%; width: 150px; height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; border: 5px solid var(--bg-sec);
+        }
         .exp-badge span { color: var(--accent); font-size: 2rem; font-weight: bold; font-family: 'Playfair Display', serif; }
-        
-        .exp-content { flex: 1; }
-        .exp-content p { color: var(--text-muted); }
+        .exp-badge p { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+        html[lang="ar"] .exp-badge p { font-size: 0.85rem; }
+        .exp-content { flex: 1; min-width: 0; }
+        .exp-content > p { color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
         .exp-list { list-style: none; margin-top: 30px; }
-        .exp-list li { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-weight: 500; color: var(--text-main); }
-        .exp-list i { color: var(--accent); font-size: 1.2rem; background: rgba(212,175,55,0.1); padding: 10px; border-radius: 50%; }
+        .exp-list li { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-weight: 500; }
+        .exp-list .icon { color: var(--accent); width: 40px; height: 40px; background: rgba(212,175,55,0.1); padding: 10px; border-radius: 50%; stroke-width: 2.2; }
 
-        /* --- GALLERY (Placeholders) --- */
-        .gallery { padding: 100px 5%; background: var(--bg-main); color: var(--text-main); text-align: center; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
-        
-        .gallery-item { position: relative; border-radius: 15px; overflow: hidden; aspect-ratio: 4/3; cursor: pointer; background: var(--bg-sec); border: 1px solid var(--glass-border); }
-        
-        .gallery-placeholder {
-            width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: var(--text-muted); transition: transform 0.6s ease; opacity: 0.5;
+        /* --- GALLERY: BEFORE / AFTER --- */
+        .gallery { padding: 110px 5%; background: var(--bg-main); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .case { margin: 0; }
+        .ba {
+            position: relative; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; background: var(--bg-sec);
+            border: 1px solid var(--glass-border); --pos: 50%; touch-action: pan-y; cursor: ew-resize; user-select: none;
         }
-        .gallery-placeholder i { font-size: 3rem; margin-bottom: 15px; }
-        .gallery-placeholder span { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+        .ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .ba-after { filter: brightness(1.05) contrast(1.03) saturate(1.02); }
+        .ba-before-wrap { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+        /* Illustrative "before": the same photo with simulated staining */
+        .ba-before { filter: sepia(0.5) saturate(1.45) hue-rotate(-8deg) brightness(0.9) contrast(0.94); }
+        .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--text-main); box-shadow: 0 0 12px rgba(0,0,0,0.4); pointer-events: none; }
+        .ba-handle span {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px; border-radius: 50%;
+            display: grid; place-items: center; background: var(--accent); color: var(--bg-main); box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        }
+        .ba-handle .icon { width: 22px; height: 22px; stroke-width: 2.4; }
+        .ba-tag {
+            position: absolute; top: 14px; padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; background: rgba(15,23,42,0.75); backdrop-filter: blur(6px); pointer-events: none;
+        }
+        .ba-tag-before { left: 14px; }
+        .ba-tag-after { right: 14px; color: var(--accent); }
+        .ba-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+        .ba:has(.ba-range:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+        .ba-fallback { display: none; position: absolute; inset: 0; place-items: center; text-align: center; color: var(--text-muted); background: radial-gradient(circle at 50% 40%, rgba(212,175,55,0.12), transparent 60%), var(--bg-sec); }
+        .ba-fallback .icon { display: block; width: 44px; height: 44px; color: var(--accent); margin: 0 auto 10px; stroke-width: 1.4; }
+        .ba.is-failed .ba-fallback { display: grid; }
+        .ba.is-failed > :not(.ba-fallback) { display: none; }
+        .ba.is-failed { cursor: default; }
+        .case figcaption { padding: 18px 4px 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+        .case figcaption h3 { font-size: 1.35rem; }
+        .case figcaption p { color: var(--accent); font-size: 0.85rem; font-weight: 500; }
 
-        .gallery-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(15,23,42,0.95), rgba(15,23,42,0.4));
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
-            opacity: 0; transition: var(--transition);
-        }
-        
-        .gallery-item:hover .gallery-placeholder { transform: scale(1.05); }
-        .gallery-item:hover .gallery-overlay { opacity: 1; }
-        
-        .gallery-overlay h3 { color: var(--text-main); font-size: 1.5rem; margin-bottom: 5px; transform: translateY(20px); transition: var(--transition); }
-        .gallery-overlay p { color: var(--accent); font-weight: 500; transform: translateY(20px); transition: var(--transition); transition-delay: 0.1s; }
-        
-        .gallery-item:hover .gallery-overlay h3, .gallery-item:hover .gallery-overlay p { transform: translateY(0); }
+        /* --- BOOKING --- */
+        .booking { padding: 110px 5%; background: linear-gradient(180deg, var(--bg-sec), var(--bg-main)); border-top: 1px solid var(--glass-border); }
+        .booking-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 60px; align-items: start; }
+        .booking-intro .section-title { margin-bottom: 18px; }
+        .booking-intro > p { color: var(--text-muted); line-height: 1.75; margin-bottom: 30px; }
+        .booking-perks { list-style: none; display: grid; gap: 16px; margin-bottom: 34px; }
+        .booking-perks li { display: flex; gap: 14px; align-items: flex-start; line-height: 1.55; }
+        .booking-perks .icon { color: var(--accent); width: 22px; height: 22px; margin-top: 1px; }
+        .booking-contact { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-radius: 14px; border: 1px solid var(--glass-border); background: rgba(15,23,42,0.45); }
+        .booking-contact span { color: var(--text-muted); font-size: 0.85rem; }
+        .booking-contact a { font-family: 'Playfair Display', serif; font-size: 1.5rem; text-decoration: none; color: var(--text-main); width: fit-content; }
+        .booking-contact a:hover { color: var(--accent); }
 
-        /* --- BOOKING MODAL --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
-            z-index: 3000; display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: var(--transition);
+        .booking-card {
+            background: var(--bg-sec); border: 1px solid var(--glass-border); border-radius: 22px; padding: 38px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.35);
         }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        
-        .modal-content {
-            background: var(--bg-sec); padding: 40px; border-radius: 20px;
-            width: 90%; max-width: 500px; position: relative;
-            transform: translateY(30px); transition: var(--transition);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto;
-            border: 1px solid var(--glass-border);
-        }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-        
-        .close-modal {
-            position: absolute; top: 20px; right: 25px; font-size: 1.5rem; 
-            cursor: pointer; color: var(--text-muted); transition: 0.3s;
-        }
-        .close-modal:hover { color: var(--accent); transform: rotate(90deg); }
-        
-        .modal-header h3 { font-size: 2rem; margin-bottom: 10px; color: var(--text-main); }
-        .modal-header p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
-        
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: var(--text-main); }
-        
-        /* OPTIMIZED INPUTS */
-        .form-group input, .form-group select {
-            width: 100%; max-width: 100%; box-sizing: border-box; height: 48px; 
-            padding: 12px 15px; border: 1px solid #334155;
-            border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
-            background: var(--bg-main); color: var(--text-main); transition: 0.3s;
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .form-group { margin-bottom: 20px; border: 0; min-width: 0; }
+        .form-group label, .form-group legend { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: var(--text-main); }
+        html[lang="ar"] .form-group label, html[lang="ar"] .form-group legend { font-size: 0.95rem; }
+        .form-group .optional { color: var(--text-muted); font-weight: 400; }
+        .form-control {
+            width: 100%; height: 50px; padding: 12px 15px; border: 1px solid var(--input-border); border-radius: 10px;
+            font-size: 0.95rem; background: var(--bg-main); color: var(--text-main); transition: border-color 0.3s, box-shadow 0.3s;
             -webkit-appearance: none; appearance: none;
         }
-        .form-group input:focus, .form-group select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px rgba(212,175,55,0.2); }
-        .form-group select option { background: var(--bg-sec); color: var(--text-main); }
-        
-        /* FLEXBOX FOR DATE & TIME */
-        .date-time-group {
-            display: flex; gap: 15px; margin-bottom: 20px; width: 100%; box-sizing: border-box;
+        textarea.form-control { height: auto; min-height: 96px; resize: vertical; line-height: 1.5; }
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-size: 18px; background-position: right 14px center; padding-inline-end: 42px; cursor: pointer;
         }
-        .date-time-group .form-group {
-            margin-bottom: 0; flex: 1; min-width: 0;
+        html[dir="rtl"] select.form-control { background-position: left 14px center; }
+        .form-control::placeholder { color: #64748B; }
+        .form-control:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(212,175,55,0.18); }
+        input[type="date"].form-control { color-scheme: dark; }
+        select.form-control option { background: var(--bg-sec); color: var(--text-main); }
+        .phone-field { display: flex; }
+        .phone-prefix {
+            display: flex; align-items: center; gap: 8px; padding: 0 14px; height: 50px; border: 1px solid var(--input-border); border-right: 0;
+            border-radius: 10px 0 0 10px; background: #0B1222; font-weight: 600; font-size: 0.95rem; white-space: nowrap;
         }
-        
+        .phone-field .form-control { border-radius: 0 10px 10px 0; }
+        .field-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; }
+        .field-error { font-size: 0.8rem; color: var(--danger); margin-top: 7px; display: flex; gap: 6px; align-items: flex-start; }
+        .field-error:empty { display: none; }
+        .is-invalid .form-control, .is-invalid .phone-prefix { border-color: #F87171; }
+        .is-invalid .seg-option span { border-color: rgba(248,113,113,0.6); }
+
+        .segmented { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .seg-option { position: relative; cursor: pointer; }
+        .seg-option input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+        .seg-option span {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2px;
+            min-height: 58px; padding: 8px 6px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--bg-main); transition: var(--transition);
+        }
+        .seg-option strong { font-size: 0.85rem; font-weight: 600; }
+        .seg-option small { font-size: 0.7rem; color: var(--text-muted); }
+        .seg-option:hover span { border-color: rgba(212,175,55,0.5); }
+        .seg-option input:checked + span { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+        .seg-option input:checked + span strong { color: var(--accent); }
+        .seg-option input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
         .btn-submit {
-            width: 100%; background: var(--whatsapp); color: white; border: none;
-            padding: 15px; border-radius: 8px; font-size: 1rem; font-weight: 700;
-            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;
-            transition: 0.3s; margin-top: 10px; font-family: 'Montserrat', sans-serif;
+            width: 100%; background: var(--whatsapp); color: #fff; border: none; padding: 17px; border-radius: 12px; font-size: 1rem; font-weight: 700;
+            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; margin-top: 6px;
         }
-        .btn-submit:hover { background: #20b858; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
+        .btn-submit:hover { background: #20b858; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37, 211, 102, 0.22); }
+        .btn-submit .icon { width: 22px; height: 22px; }
+        .form-privacy { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 14px; }
+
+        .booking-success { text-align: center; padding: 10px 0; outline: none; }
+        .booking-success[hidden] { display: none; }
+        .success-icon { width: 76px; height: 76px; margin: 0 auto 20px; border-radius: 50%; display: grid; place-items: center; background: rgba(37,211,102,0.12); color: var(--whatsapp); animation: popIn 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+        .success-icon .icon { width: 38px; height: 38px; stroke-width: 2.2; }
+        @keyframes popIn { from { transform: scale(0.4); opacity: 0; } to { transform: none; opacity: 1; } }
+        .booking-success h3 { font-size: 1.9rem; margin-bottom: 10px; }
+        .booking-success > p { color: var(--text-muted); line-height: 1.65; max-width: 420px; margin: 0 auto 24px; }
+        .success-summary { text-align: start; border: 1px solid var(--glass-border); border-radius: 14px; padding: 6px 20px; margin-bottom: 26px; background: rgba(15,23,42,0.5); }
+        .success-summary div { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--glass-border); font-size: 0.88rem; }
+        .success-summary div:last-child { border-bottom: 0; }
+        .success-summary dt { color: var(--text-muted); flex-shrink: 0; }
+        .success-summary dd { font-weight: 600; text-align: end; overflow-wrap: anywhere; }
+        .success-actions { display: flex; flex-direction: column; gap: 12px; }
+        .success-actions .btn-submit { text-decoration: none; margin: 0; }
+        .btn-link { background: none; border: 0; color: var(--text-muted); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 8px; font-size: 0.9rem; }
+        .btn-link:hover { color: var(--accent); }
+
+        /* --- VISIT / CONTACT --- */
+        .visit { padding: 110px 5%; background: var(--bg-main); }
+        .visit-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 30px; align-items: stretch; }
+        .map-wrap { border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border); min-height: 440px; background: var(--bg-sec); }
+        .map-wrap iframe { width: 100%; height: 100%; min-height: 440px; border: 0; display: block; filter: invert(0.9) hue-rotate(180deg) saturate(0.6) contrast(0.92); }
+        .visit-card { background: var(--bg-sec); border: 1px solid var(--glass-border); border-radius: 20px; padding: 34px; display: flex; flex-direction: column; gap: 24px; }
+        .visit-item { display: flex; gap: 16px; align-items: flex-start; }
+        .visit-item > .icon { width: 44px; height: 44px; padding: 11px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+        .visit-item h3 { font-family: var(--font-body); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+        html[lang="ar"] .visit-item h3 { font-size: 0.9rem; }
+        .visit-item p, .visit-item a { color: var(--text-main); text-decoration: none; line-height: 1.55; }
+        .visit-item a:hover { color: var(--accent); }
+        .directions { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--accent) !important; font-size: 0.85rem; font-weight: 600; }
+        .hours { display: grid; gap: 6px; width: 100%; }
+        .hours div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; }
+        .hours dt { color: var(--text-main); white-space: nowrap; }
+        .hours dd { color: var(--text-main); font-weight: 600; white-space: nowrap; }
+        .hours-note { color: var(--accent) !important; font-size: 0.82rem; margin-top: 6px; }
+        .visit-item > div { flex: 1; min-width: 0; }
 
         /* --- FOOTER --- */
-        footer { background: #070B14; color: var(--text-muted); padding: 80px 5% 40px; border-top: 1px solid rgba(255,255,255,0.02); }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 60px; }
-        .footer-col h3 { color: var(--text-main); font-size: 1.2rem; margin-bottom: 25px; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .footer-col p, .footer-col a { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
-        .footer-col i { color: var(--accent); margin-top: 4px; }
-        .footer-col a:hover { color: var(--accent); }
-        .wrap-text { word-break: break-word; overflow-wrap: break-word; } 
+        footer { background: var(--bg-deep); color: var(--text-muted); padding: 80px 5% 40px; border-top: 1px solid rgba(255,255,255,0.03); }
+        .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 56px; }
+        .footer-col h3 { color: var(--text-main); font-size: 1rem; margin-bottom: 22px; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col p { line-height: 1.7; }
+        .footer-links { list-style: none; display: grid; gap: 12px; }
+        .footer-links a, .footer-contact a { color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover, .footer-contact a:hover { color: var(--accent); }
+        .footer-contact { display: grid; gap: 14px; }
+        .footer-contact a, .footer-contact p { display: flex; gap: 10px; align-items: flex-start; overflow-wrap: anywhere; }
+        .footer-contact .icon { color: var(--accent); margin-top: 3px; }
+        .footer-social { display: flex; gap: 12px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.82rem; color: #64748B; }
+        .footer-bottom a { color: inherit; text-underline-offset: 3px; }
+        .concept-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(212,175,55,0.4); }
+        .concept-note a:hover { text-decoration-color: var(--accent); }
 
-        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; color: #64748B; }
+        /* --- FLOATING WHATSAPP --- */
+        .wa-float {
+            position: fixed; bottom: 22px; inset-inline-end: 22px; z-index: 900; width: 60px; height: 60px; border-radius: 50%;
+            display: grid; place-items: center; background: var(--whatsapp); color: #fff; box-shadow: 0 12px 30px rgba(37,211,102,0.35);
+            transition: transform 0.3s ease;
+        }
+        .wa-float:hover { transform: scale(1.08); }
+        .wa-float .icon { width: 30px; height: 30px; stroke-width: 1.9; }
+        .wa-float::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--whatsapp); animation: waRing 2.6s ease-out infinite; }
+        @keyframes waRing { from { transform: scale(1); opacity: 0.7; } to { transform: scale(1.6); opacity: 0; } }
 
-        /* --- ANIMATIONS (Scroll Reveal) --- */
-        .reveal { opacity: 0; transform: translateY(40px); transition: 0.8s all cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* --- SCROLL REVEAL (only hides content when JS is running) --- */
+        .js .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .js .reveal.active { opacity: 1; transform: none; }
 
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 992px) {
-            .experience { flex-direction: column; }
-            .hero h1 { font-size: 3.5rem; }
-            .stats-bar { left: 5%; right: 5%; width: 90%; border-radius: 20px; }
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1199.98px) {
+            .booking-grid { gap: 40px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1023.98px) {
+            :root { --nav-h: 72px; }
+            .hamburger { display: inline-flex; }
             .nav-links {
-                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-                background: var(--bg-main); flex-direction: column; justify-content: center;
-                transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); z-index: -1;
+                position: fixed; inset: 0; height: 100vh; height: 100dvh; z-index: -2; padding: 100px 8% 40px;
+                flex-direction: column; justify-content: center; gap: 26px; background: var(--bg-main);
+                opacity: 0; visibility: hidden; transform: translateY(-14px);
+                transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
             }
-            .nav-links.active { right: 0; }
-            .nav-links a { color: var(--text-main) !important; font-size: 1.5rem; }
-            .hamburger { display: block; }
-            
-            .hero {
-                height: auto;
-                min-height: 100vh;
-                padding-top: 130px; 
-                padding-bottom: 60px;
-                flex-direction: column;
-                justify-content: center;
-                align-items: flex-start;
-            }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-cta { flex-direction: column; width: 100%; }
-            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
-            
-            .stats-bar { 
-                position: relative; 
-                width: 100%; 
-                bottom: auto; 
-                right: auto;
-                left: auto;
-                margin-top: 50px; 
-                border-radius: 20px; 
-                flex-direction: column; 
-                gap: 30px; 
-                padding: 40px 30px; 
-                background: rgba(30, 41, 59, 0.8); 
-                border: 1px solid var(--glass-border);
-            }
-            
-            .section-title { font-size: 2.2rem; }
-            .services { padding-top: 80px; } 
-            
-            .service-grid { grid-template-columns: 1fr; }
-            .gallery-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
-            
-            .modal-content { padding: 30px 20px; margin-top: 20px; }
-            .modal-header h3 { font-size: 1.5rem; }
-            
-            /* Stack date/time on very small phones */
-            .date-time-group { flex-direction: column; gap: 20px; }
+            .nav-links.active { opacity: 1; visibility: visible; transform: none; }
+            .nav-links a { font-size: 1.25rem !important; }
+            .nav-links .btn-book { margin-top: 10px; padding: 14px 36px; }
+
+            .hero { grid-template-columns: 1fr; gap: 30px; padding-bottom: 60px; }
+            .hero-content { max-width: 640px; }
+            .hero-visual { margin: -10px auto 0; width: 100%; max-width: 480px; }
+            .implant-stage { width: 100%; }
+            .hero-aside { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; text-align: start; gap: 24px 36px; }
+            .open-status .status-line { justify-content: flex-start; }
+            .hero-stats { flex-direction: row; gap: 36px; }
+            .hero-social { flex-direction: row; }
+
+            .experience { flex-direction: column; gap: 60px; }
+            .exp-image, .exp-content { width: 100%; }
+            .exp-badge { inset-inline-end: 16px; bottom: -28px; width: 128px; height: 128px; }
+
+            .booking-grid { grid-template-columns: 1fr; }
+            .visit-grid { grid-template-columns: 1fr; }
+            .map-wrap, .map-wrap iframe { min-height: 340px; }
+        }
+
+        @media (max-width: 767.98px) {
+            .hero { padding-top: calc(var(--nav-h) + 24px); }
+            .hero-cta { flex-direction: column; }
+            .hero-cta a { width: 100%; }
+            .hero-mini-stat { margin-top: 36px; }
+            .hero-visual { max-width: 400px; }
+            .orbit-chip { padding: 7px 10px; gap: 8px; }
+            .orbit-chip strong { font-size: 0.66rem; }
+            .orbit-chip small { display: none; }
+            .orbit-chip .chip-price { font-size: 0.66rem; }
+            .chip-a { top: 58%; }
+            .chip-b { top: 44%; }
+            .hero-stats .stat-number { font-size: 2.4rem; }
+            .hero-social { display: none; }
+
+            .services, .gallery, .booking, .visit { padding: 80px 5%; }
+            .section-header { margin-bottom: 44px; }
+            .service-grid, .gallery-grid { grid-template-columns: 1fr; }
+            .service-card { padding: 32px 22px 22px; }
+            .insurance { padding: 22px; }
+
+            .experience { padding: 80px 5%; }
+            .booking-card { padding: 26px 18px; border-radius: 18px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .segmented { gap: 8px; }
+            .seg-option strong { font-size: 0.8rem; }
+            .seg-option small { font-size: 0.66rem; }
+            .booking-contact a { font-size: 1.3rem; }
+            .visit-card { padding: 26px 20px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 34px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .wa-float { width: 56px; height: 56px; bottom: 18px; inset-inline-end: 18px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: 0.01ms !important; }
         }
     </style>
 </head>
 <body>
 
-    <div id="preloader">
+    <!-- Icon sprite -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+            <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+            <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+            <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+            <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+            <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+            <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+            <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+            <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+            <symbol id="i-nav" viewBox="0 0 24 24"><path d="M3 11 22 2l-9 19-2-8-8-2z"/></symbol>
+            <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol>
+            <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></symbol>
+            <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+            <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M16 3c.3 2.4 1.9 4 4 4.2v3.2c-1.5 0-2.9-.4-4-1.2v6.3A5.5 5.5 0 1 1 10.5 10v3.3a2.3 2.3 0 1 0 2.3 2.2V3z"/></symbol>
+            <symbol id="i-tooth" viewBox="0 0 24 24"><path d="M7 3C4.5 3 3 5 3 7.5c0 2 .8 3.5 1.5 5 .7 1.6.8 3.5 1.2 5.5.3 1.6.8 3 1.8 3 1.6 0 1.5-3.5 2.2-5.3.4-.9.8-1.2 1.3-1.2s.9.3 1.3 1.2c.7 1.8.6 5.3 2.2 5.3 1 0 1.5-1.4 1.8-3 .4-2 .5-3.9 1.2-5.5.7-1.5 1.5-3 1.5-5C21 5 19.5 3 17 3c-1.8 0-2.6 1-5 1S8.8 3 7 3z"/></symbol>
+            <symbol id="i-aligner" viewBox="0 0 24 24"><path d="M3 8c0 7 4 12 9 12s9-5 9-12"/><path d="M7 8.5c0 4.6 2.2 7.5 5 7.5s5-2.9 5-7.5"/><path d="M3 8h4M17 8h4"/></symbol>
+            <symbol id="i-implant" viewBox="0 0 24 24"><path d="M7 4.2C7 2.8 8.4 2.4 9.6 2.8c.8.3 1.6.3 2.4.3s1.6 0 2.4-.3c1.2-.4 2.6 0 2.6 1.4 0 2-1.2 3.4-2.4 3.8H9.4C8.2 7.6 7 6.2 7 4.2z"/><path d="M9.5 10.5h5"/><path d="M10 10.5l.6 9.5L12 22l1.4-2 .6-9.5"/><path d="M9.8 13.5h4.4M10 16.5h4"/></symbol>
+            <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></symbol>
+            <symbol id="i-microscope" viewBox="0 0 24 24"><path d="M6 18h8M3 22h18M14 22a7 7 0 1 0 0-14h-1M9 14h2M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></symbol>
+            <symbol id="i-child" viewBox="0 0 24 24"><path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/></symbol>
+            <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+            <symbol id="i-compare" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></symbol>
+            <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+            <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+        </defs>
+    </svg>
+
+    <div id="preloader" aria-hidden="true">
         <div class="tooth-loader">
             <svg viewBox="0 0 100 100">
                 <path d="M25 30 C 25 15, 45 15, 50 20 C 55 15, 75 15, 75 30 C 75 45, 65 60, 60 80 C 58 90, 42 90, 40 80 C 35 60, 25 45, 25 30 Z" />
@@ -294,396 +641,1245 @@
         </div>
     </div>
 
-    <nav id="navbar">
-        <a href="#" class="logo-container">
-            <svg class="logo-svg" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="6">
+    <nav id="navbar" aria-label="Main">
+        <a href="#home" class="logo-container" aria-label="Ivory Dental Studio home" data-i18n-attr="aria-label:nav.homeLabel">
+            <svg class="logo-svg" viewBox="0 0 100 100" fill="none" stroke="#D4AF37" stroke-width="6" aria-hidden="true">
                 <path d="M30 30 C 30 15, 50 15, 55 20 C 60 15, 80 15, 80 30 C 80 45, 70 60, 65 80 C 63 90, 47 90, 45 80 C 40 60, 30 45, 30 30 Z" />
                 <line x1="30" y1="15" x2="30" y2="85" />
             </svg>
             <div class="logo-text">Ivory<span>.</span></div>
         </a>
         <div class="nav-links" id="navLinks">
-            <a href="#home">Home</a>
-            <a href="#services">Services</a>
-            <a href="#experience">The Experience</a>
-            <a href="#gallery">Smile Gallery</a>
-            <a onclick="openModal()" class="btn-book">Book Consult</a>
+            <a href="#home" data-i18n="nav.home">Home</a>
+            <a href="#services" data-i18n="nav.services">Services</a>
+            <a href="#experience" data-i18n="nav.experience">The Experience</a>
+            <a href="#gallery" data-i18n="nav.gallery">Smile Gallery</a>
+            <a href="#contact" data-i18n="nav.contact">Contact</a>
+            <a href="#book" class="btn-book" data-i18n="nav.book">Book Consult</a>
         </div>
-        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+        <div class="nav-actions">
+            <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch to Arabic">
+                <span data-lang="en" class="on">EN</span><span class="sep" aria-hidden="true">|</span><span data-lang="ar" class="ar-glyph" lang="ar">ع</span>
+            </button>
+            <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu" data-i18n-attr="aria-label:nav.menu">
+                <svg class="icon i-open"><use href="#i-menu"/></svg>
+                <svg class="icon i-close"><use href="#i-close"/></svg>
+            </button>
+        </div>
     </nav>
 
+    <main>
     <section id="home" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content reveal">
-            <span class="hero-subtitle">Redefining Dentistry</span>
-            <h1>The Art of a Perfect Smile.</h1>
-            <p>Experience pain-free, luxury dental care. Ivory Dental Studio combines cutting-edge aesthetic technology with a calming, spa-like environment.</p>
+        <div class="hero-watermark" aria-hidden="true">Ivory</div>
+
+        <div class="hero-content">
+            <span class="hero-badge"><span class="dot"></span><span data-i18n="hero.badge">Boutique Dental Studio · Jumeirah, Dubai</span></span>
+            <h1 data-i18n="hero.title">The Art of a <em>Perfect</em> Smile.</h1>
+            <p class="hero-text" data-i18n="hero.text">Experience pain-free, luxury dental care. Ivory Dental Studio combines cutting-edge aesthetic technology with a calming, spa-like environment.</p>
             <div class="hero-cta">
-                <a onclick="openModal()" class="btn-primary">Book Appointment</a>
-                <a href="#services" class="btn-secondary">Explore Services</a>
+                <a href="#book" class="btn-primary"><span data-i18n="cta.book">Book Appointment</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                <a href="#services" class="btn-secondary" data-i18n="cta.explore">Explore Services</a>
+            </div>
+            <div class="hero-mini-stat">
+                <span class="stat-number"><span class="dot"></span><span class="ltr">5K<em>+</em></span></span>
+                <span class="stat-label" data-i18n="stat.smiles">Smiles restored for patients across Dubai</span>
             </div>
         </div>
-        
-        <div class="stats-bar reveal">
-            <div class="stat-item">
-                <span class="stat-number">5K+</span>
-                <span class="stat-label">Smiles Restored</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">10+</span>
-                <span class="stat-label">Years Expertise</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">4.9</span>
-                <span class="stat-label">Patient Rating</span>
+
+        <!-- Animated 3D-style implant (decorative) -->
+        <div class="hero-visual" aria-hidden="true">
+            <div class="implant-stage" id="implantStage">
+                <svg class="implant" id="implantSvg" viewBox="0 0 600 780" focusable="false">
+                    <defs>
+                        <linearGradient id="gSilver" x1="0" x2="1" y1="0" y2="0">
+                            <stop offset="0" stop-color="#262C37"/><stop offset=".08" stop-color="#5A6474"/>
+                            <stop offset=".22" stop-color="#C6CDD8"/><stop offset=".32" stop-color="#F8FAFC"/>
+                            <stop offset=".44" stop-color="#AEB7C4"/><stop offset=".62" stop-color="#626C7D"/>
+                            <stop offset=".8" stop-color="#A9B3C1"/><stop offset=".92" stop-color="#495161"/>
+                            <stop offset="1" stop-color="#20252F"/>
+                        </linearGradient>
+                        <linearGradient id="gSilverDark" x1="0" x2="1" y1="0" y2="0">
+                            <stop offset="0" stop-color="#151920"/><stop offset=".25" stop-color="#4B5363"/>
+                            <stop offset=".36" stop-color="#8E98A7"/><stop offset=".5" stop-color="#454D5C"/>
+                            <stop offset=".8" stop-color="#5D6676"/><stop offset="1" stop-color="#12161D"/>
+                        </linearGradient>
+                        <linearGradient id="gThread" gradientUnits="userSpaceOnUse" x1="232" x2="368" y1="0" y2="0">
+                            <stop offset="0" stop-color="#2A303B"/><stop offset=".12" stop-color="#6B7585"/>
+                            <stop offset=".27" stop-color="#DCE2EA"/><stop offset=".35" stop-color="#FFFFFF"/>
+                            <stop offset=".47" stop-color="#A3ACBA"/><stop offset=".66" stop-color="#5A6373"/>
+                            <stop offset=".82" stop-color="#9AA4B2"/><stop offset="1" stop-color="#262B35"/>
+                        </linearGradient>
+                        <linearGradient id="gGold" x1="0" x2="1" y1="0" y2="0">
+                            <stop offset="0" stop-color="#3A2D0C"/><stop offset=".1" stop-color="#7E6020"/>
+                            <stop offset=".24" stop-color="#E5C25E"/><stop offset=".33" stop-color="#FFF1BF"/>
+                            <stop offset=".45" stop-color="#D4AF37"/><stop offset=".63" stop-color="#85661E"/>
+                            <stop offset=".8" stop-color="#C9A445"/><stop offset=".92" stop-color="#5E4815"/>
+                            <stop offset="1" stop-color="#2E230A"/>
+                        </linearGradient>
+                        <linearGradient id="gFaceSilver" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0" stop-color="#6F7989"/><stop offset="1" stop-color="#E9EDF2"/>
+                        </linearGradient>
+                        <linearGradient id="gFaceGold" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0" stop-color="#7E6020"/><stop offset="1" stop-color="#FCE7A2"/>
+                        </linearGradient>
+                        <radialGradient id="gCrown" cx=".36" cy=".26" r=".9">
+                            <stop offset="0" stop-color="#FFFFFF"/><stop offset=".32" stop-color="#F6F3EC"/>
+                            <stop offset=".62" stop-color="#D5DBE4"/><stop offset=".85" stop-color="#A3AFC2"/>
+                            <stop offset="1" stop-color="#7D8BA3"/>
+                        </radialGradient>
+                        <linearGradient id="gCrownShade" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0" stop-color="#1E293B" stop-opacity="0"/><stop offset=".6" stop-color="#1E293B" stop-opacity="0"/>
+                            <stop offset="1" stop-color="#1E293B" stop-opacity=".42"/>
+                        </linearGradient>
+                        <radialGradient id="gGlow" cx=".5" cy=".5" r=".5">
+                            <stop offset="0" stop-color="#D4AF37" stop-opacity=".22"/>
+                            <stop offset=".45" stop-color="#6A8CD2" stop-opacity=".12"/>
+                            <stop offset="1" stop-color="#0F172A" stop-opacity="0"/>
+                        </radialGradient>
+                        <filter id="fBlur6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+                        <filter id="fBlur3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+                        <filter id="fBlur1"><feGaussianBlur stdDeviation="1.2"/></filter>
+                        <clipPath id="cpScrew"><path d="M232 476 L262 728 Q300 772 338 728 L368 476 Z"/></clipPath>
+                        <g id="thr">
+                            <path d="M212 6 A88 12 0 0 0 388 6" stroke="#0A0E15" stroke-opacity=".65" stroke-width="5" fill="none"/>
+                            <path d="M212 0 A88 12 0 0 0 388 0" stroke="url(#gThread)" stroke-width="10" fill="none"/>
+                            <path d="M212 -4 A88 12 0 0 0 388 -4" stroke="#FFFFFF" stroke-opacity=".5" stroke-width="1.4" fill="none"/>
+                        </g>
+                    </defs>
+
+                    <circle class="imp-glow" cx="300" cy="370" r="300" fill="url(#gGlow)"/>
+
+                    <!-- back half of the orbit (behind the implant) -->
+                    <g class="orbit-wrap"><g transform="rotate(-9 300 470)">
+                        <path class="orbit-line orbit-back" d="M30 470 A270 62 0 0 1 570 470"/>
+                    </g></g>
+
+                    <g class="imp-float">
+                        <!-- implant fixture (screw) -->
+                        <g class="imp-screw">
+                            <path d="M244 476 L270 726 Q300 762 330 726 L356 476 Z" fill="url(#gSilverDark)"/>
+                            <g clip-path="url(#cpScrew)">
+                                <g transform="rotate(-4 300 600)">
+                                    <g class="imp-threads">
+                                        <use href="#thr" y="440"/><use href="#thr" y="460"/><use href="#thr" y="480"/><use href="#thr" y="500"/>
+                                        <use href="#thr" y="520"/><use href="#thr" y="540"/><use href="#thr" y="560"/><use href="#thr" y="580"/>
+                                        <use href="#thr" y="600"/><use href="#thr" y="620"/><use href="#thr" y="640"/><use href="#thr" y="660"/>
+                                        <use href="#thr" y="680"/><use href="#thr" y="700"/><use href="#thr" y="720"/><use href="#thr" y="740"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+
+                        <!-- abutment -->
+                        <g class="imp-abut">
+                            <path d="M230 452 A70 12 0 0 0 370 452 L368 480 A68 12 0 0 1 232 480 Z" fill="url(#gSilver)"/>
+                            <ellipse cx="300" cy="452" rx="70" ry="12" fill="url(#gFaceSilver)"/>
+                            <ellipse cx="300" cy="452" rx="61" ry="10" fill="#121722"/>
+                            <path d="M240 432 A60 10 0 0 0 360 432 L360 454 A60 10 0 0 1 240 454 Z" fill="url(#gSilver)"/>
+                            <path d="M222 420 A78 14 0 0 0 378 420 L376 436 A76 13.5 0 0 1 224 436 Z" fill="url(#gGold)"/>
+                            <ellipse cx="300" cy="420" rx="78" ry="14" fill="url(#gFaceGold)"/>
+                            <path d="M254 372 A46 8 0 0 0 346 372 L372 420 A72 13 0 0 1 228 420 Z" fill="url(#gGold)"/>
+                            <path d="M248 312 A52 9 0 0 0 352 312 L346 374 A46 8 0 0 1 254 374 Z" fill="url(#gSilver)"/>
+                            <path d="M250 340 A51 9 0 0 0 350 340" stroke="#1B202A" stroke-width="2.5" fill="none"/>
+                            <path d="M250 343 A51 9 0 0 0 350 343" stroke="#FFFFFF" stroke-opacity=".45" stroke-width="1" fill="none"/>
+                            <path d="M248 314 C248 280 270 262 300 262 C330 262 352 280 352 314 A52 9 0 0 1 248 314 Z" fill="url(#gSilver)"/>
+                            <ellipse cx="282" cy="281" rx="15" ry="8" fill="#FFFFFF" opacity=".75" filter="url(#fBlur3)"/>
+                            <ellipse class="imp-crown-shadow" cx="300" cy="270" rx="44" ry="9" fill="#05080D" filter="url(#fBlur6)"/>
+                        </g>
+
+                        <!-- crown -->
+                        <g class="imp-crown-in"><g class="imp-crown">
+                            <path d="M218 210 C192 185 176 140 182 100 C186 62 204 38 232 34 C252 31 266 44 278 52 C288 58 296 58 304 54 C316 44 336 30 362 33 C396 37 416 64 418 102 C420 142 406 186 382 210 C362 228 332 236 300 236 C268 236 238 228 218 210 Z" fill="url(#gCrown)"/>
+                            <path d="M218 210 C192 185 176 140 182 100 C186 62 204 38 232 34 C252 31 266 44 278 52 C288 58 296 58 304 54 C316 44 336 30 362 33 C396 37 416 64 418 102 C420 142 406 186 382 210 C362 228 332 236 300 236 C268 236 238 228 218 210 Z" fill="url(#gCrownShade)"/>
+                            <ellipse cx="240" cy="58" rx="22" ry="12" fill="#FFFFFF" opacity=".85" filter="url(#fBlur3)"/>
+                            <ellipse cx="354" cy="56" rx="22" ry="11" fill="#FFFFFF" opacity=".7" filter="url(#fBlur3)"/>
+                            <path d="M246 80 C270 94 286 84 300 88 C316 92 332 82 352 78" stroke="#8090A8" stroke-opacity=".45" stroke-width="2.2" fill="none" filter="url(#fBlur1)"/>
+                            <path d="M300 62 C298 72 300 82 300 88" stroke="#8090A8" stroke-opacity=".35" stroke-width="2" fill="none" filter="url(#fBlur1)"/>
+                            <ellipse cx="200" cy="132" rx="7" ry="40" fill="#FFFFFF" opacity=".55" filter="url(#fBlur3)"/>
+                            <ellipse cx="398" cy="138" rx="9" ry="48" fill="#93B4FD" opacity=".35" filter="url(#fBlur6)"/>
+                            <path d="M224 206 C252 228 348 228 376 206" stroke="#64748B" stroke-opacity=".4" stroke-width="3" fill="none" filter="url(#fBlur1)"/>
+                            <ellipse class="imp-glint" cx="252" cy="122" rx="15" ry="30" fill="#FFFFFF" transform="rotate(-20 252 122)" filter="url(#fBlur6)"/>
+                        </g></g>
+                    </g>
+
+                    <!-- front half of the orbit + travelling light -->
+                    <g class="orbit-wrap"><g transform="rotate(-9 300 470)">
+                        <path class="orbit-line" d="M30 470 A270 62 0 0 0 570 470"/>
+                        <circle r="4.5" fill="#F1D77A">
+                            <animateMotion dur="10s" repeatCount="indefinite" path="M30 470 A270 62 0 0 0 570 470 A270 62 0 0 0 30 470"/>
+                            <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.46;0.52;0.96;1" dur="10s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle r="12" fill="#F1D77A" opacity=".18">
+                            <animateMotion dur="10s" repeatCount="indefinite" path="M30 470 A270 62 0 0 0 570 470 A270 62 0 0 0 30 470"/>
+                            <animate attributeName="opacity" values=".18;.18;0;0;.18" keyTimes="0;0.46;0.52;0.96;1" dur="10s" repeatCount="indefinite"/>
+                        </circle>
+                    </g></g>
+                </svg>
+
+                <canvas class="crown-3d" id="crown3d"></canvas>
+
+                <div class="orbit-chip chip-a">
+                    <span class="chip-pin"></span>
+                    <div><strong data-i18n="chip.a.title">Laser Whitening</strong><small data-i18n="chip.a.sub">60-minute session</small></div>
+                    <span class="chip-price" data-i18n="chip.a.price">AED 1,200</span>
+                </div>
+                <div class="orbit-chip chip-b">
+                    <div><strong data-i18n="chip.b.title">Implant Consultation</strong><small data-i18n="chip.b.sub">3D scan included</small></div>
+                    <span class="chip-price" data-i18n="chip.b.price">AED 4,500</span>
+                    <span class="chip-pin"></span>
+                </div>
             </div>
         </div>
+
+        <aside class="hero-aside" aria-label="Clinic status">
+            <div class="open-status" id="openStatus">
+                <span id="todayDate"></span>
+                <span class="status-line"><span class="status-dot"></span><span id="statusText" data-i18n="status.fallback">Open 7 days a week</span></span>
+                <span id="todayHours"></span>
+            </div>
+            <a class="hero-location" href="#contact"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="hero.location">Jumeirah 1, Dubai</span></a>
+            <div class="hero-stats">
+                <div class="stat-item"><span class="stat-number ltr">10+</span><span class="stat-label" data-i18n="stat.years">Years expertise</span></div>
+                <div class="stat-item"><span class="stat-number ltr">4.9</span><span class="stat-label" data-i18n="stat.rating">Patient rating</span></div>
+            </div>
+            <div class="hero-social">
+                <a class="social-btn" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a>
+                <a class="social-btn" href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok"><svg class="icon"><use href="#i-tiktok"/></svg></a>
+                <a class="social-btn wa-link" href="https://wa.me/97140000000" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="icon"><use href="#i-whatsapp"/></svg></a>
+            </div>
+        </aside>
     </section>
 
     <section id="services" class="services">
-        <div class="section-header reveal">
-            <span class="section-subtitle">Our Expertise</span>
-            <h2 class="section-title">Comprehensive & Cosmetic Care</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">We offer specialized treatments utilizing state-of-the-art diagnostic equipment to ensure precision, comfort, and breathtaking results.</p>
-        </div>
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle" data-i18n="svc.sub">Our Expertise</span>
+                <h2 class="section-title" data-i18n="svc.title">Comprehensive &amp; Cosmetic Care</h2>
+                <p data-i18n="svc.text">We offer specialized treatments utilizing state-of-the-art diagnostic equipment to ensure precision, comfort, and breathtaking results.</p>
+            </div>
 
-        <div class="service-grid">
-            <div class="service-card reveal">
-                <i class="fas fa-tooth service-icon"></i>
-                <h3>Smile Design</h3>
-                <p>Custom-crafted porcelain veneers and Lumineers designed digitally to complement your facial structure.</p>
+            <div class="service-grid">
+                <article class="service-card reveal">
+                    <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="#i-tooth"/></svg></div>
+                    <h3 data-i18n="svc.veneers.title">Smile Design</h3>
+                    <p data-i18n="svc.veneers.text">Custom-crafted porcelain veneers and Lumineers designed digitally to complement your facial structure.</p>
+                    <div class="service-foot">
+                        <span class="service-price" data-i18n="svc.veneers.price">From <strong>AED 1,800</strong> / tooth</span>
+                        <a href="#book" class="service-book" data-treatment="veneers"><span data-i18n="svc.bookThis">Book</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </div>
+                </article>
+                <article class="service-card reveal" style="transition-delay: 0.1s;">
+                    <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="#i-aligner"/></svg></div>
+                    <h3 data-i18n="svc.invisalign.title">Invisalign &amp; Ortho</h3>
+                    <p data-i18n="svc.invisalign.text">Discreet, clear aligners to safely and efficiently straighten your teeth without traditional metal braces.</p>
+                    <div class="service-foot">
+                        <span class="service-price" data-i18n="svc.invisalign.price">From <strong>AED 12,000</strong></span>
+                        <a href="#book" class="service-book" data-treatment="invisalign"><span data-i18n="svc.bookThis">Book</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </div>
+                </article>
+                <article class="service-card reveal" style="transition-delay: 0.2s;">
+                    <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="#i-implant"/></svg></div>
+                    <h3 data-i18n="svc.implants.title">Implantology</h3>
+                    <p data-i18n="svc.implants.text">Permanent, natural-looking tooth replacements surgically placed to restore full function and aesthetics.</p>
+                    <div class="service-foot">
+                        <span class="service-price" data-i18n="svc.implants.price">From <strong>AED 4,500</strong> / implant</span>
+                        <a href="#book" class="service-book" data-treatment="implants"><span data-i18n="svc.bookThis">Book</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </div>
+                </article>
+                <article class="service-card reveal">
+                    <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></div>
+                    <h3 data-i18n="svc.whitening.title">Laser Whitening</h3>
+                    <p data-i18n="svc.whitening.text">Advanced laser technology that lifts years of stains in a single, comfortable one-hour session.</p>
+                    <div class="service-foot">
+                        <span class="service-price" data-i18n="svc.whitening.price">From <strong>AED 1,200</strong></span>
+                        <a href="#book" class="service-book" data-treatment="whitening"><span data-i18n="svc.bookThis">Book</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </div>
+                </article>
+                <article class="service-card reveal" style="transition-delay: 0.1s;">
+                    <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="#i-microscope"/></svg></div>
+                    <h3 data-i18n="svc.endo.title">Painless Endodontics</h3>
+                    <p data-i18n="svc.endo.text">Microscope-assisted root canal therapies prioritizing your comfort and preserving your natural teeth.</p>
+                    <div class="service-foot">
+                        <span class="service-price" data-i18n="svc.endo.price">From <strong>AED 1,500</strong></span>
+                        <a href="#book" class="service-book" data-treatment="endo"><span data-i18n="svc.bookThis">Book</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </div>
+                </article>
+                <article class="service-card reveal" style="transition-delay: 0.2s;">
+                    <div class="service-icon"><svg class="icon" aria-hidden="true"><use href="#i-child"/></svg></div>
+                    <h3 data-i18n="svc.kids.title">Pediatric Dentistry</h3>
+                    <p data-i18n="svc.kids.text">Gentle, anxiety-free preventative care designed specifically to make children look forward to the dentist.</p>
+                    <div class="service-foot">
+                        <span class="service-price" data-i18n="svc.kids.price">Check-ups from <strong>AED 300</strong></span>
+                        <a href="#book" class="service-book" data-treatment="kids"><span data-i18n="svc.bookThis">Book</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </div>
+                </article>
             </div>
-            <div class="service-card reveal" style="transition-delay: 0.1s;">
-                <i class="fas fa-magic service-icon"></i>
-                <h3>Invisalign & Ortho</h3>
-                <p>Discreet, clear aligners to safely and efficiently straighten your teeth without traditional metal braces.</p>
-            </div>
-            <div class="service-card reveal" style="transition-delay: 0.2s;">
-                <i class="fas fa-gem service-icon"></i>
-                <h3>Implantology</h3>
-                <p>Permanent, natural-looking tooth replacements surgically placed to restore full function and aesthetics.</p>
-            </div>
-            <div class="service-card reveal">
-                <i class="fas fa-spa service-icon"></i>
-                <h3>Laser Whitening</h3>
-                <p>Advanced laser technology that lifts years of stains in a single, comfortable one-hour session.</p>
-            </div>
-            <div class="service-card reveal" style="transition-delay: 0.1s;">
-                <i class="fas fa-microscope service-icon"></i>
-                <h3>Painless Endodontics</h3>
-                <p>Microscope-assisted root canal therapies prioritizing your comfort and preserving your natural teeth.</p>
-            </div>
-            <div class="service-card reveal" style="transition-delay: 0.2s;">
-                <i class="fas fa-child service-icon"></i>
-                <h3>Pediatric Dentistry</h3>
-                <p>Gentle, anxiety-free preventative care designed specifically to make children look forward to the dentist.</p>
+            <p class="price-note" data-i18n="svc.priceNote">Prices are indicative starting points. Your final treatment plan and quote are confirmed after consultation.</p>
+
+            <div class="insurance reveal">
+                <div class="insurance-head">
+                    <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+                    <div>
+                        <h3 data-i18n="ins.title">Accepted insurance</h3>
+                        <p data-i18n="ins.note">Bring your insurance card and we'll confirm your cover before treatment.</p>
+                    </div>
+                </div>
+                <ul class="insurance-badges">
+                    <li data-i18n="ins.b1">Direct billing</li>
+                    <li data-i18n="ins.b2">Major UAE insurers</li>
+                    <li data-i18n="ins.b3">International plans</li>
+                    <li data-i18n="ins.b4">Corporate packages</li>
+                    <li data-i18n="ins.b5">0% instalment plans</li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section id="experience" class="experience">
         <div class="exp-image reveal">
-            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1000&auto=format&fit=crop" alt="Modern Dental Clinic">
+            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1000&auto=format&fit=crop" alt="Modern dental treatment room with a patient chair and soft lighting" data-i18n-attr="alt:exp.imgAlt" loading="lazy" width="1000" height="750">
             <div class="exp-badge">
-                <span>100%</span>
-                <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; color: var(--text-main);">Pain-Free<br>Promise</p>
+                <span class="ltr">100%</span>
+                <p data-i18n="exp.badge">Pain-Free<br>Promise</p>
             </div>
         </div>
         <div class="exp-content reveal">
-            <span class="section-subtitle">Why Ivory Studio?</span>
-            <h2 class="section-title">Dentistry Without The Anxiety.</h2>
-            <p style="line-height: 1.7; margin-bottom: 20px;">We believe a visit to the dentist shouldn't feel clinical. From the moment you walk into our studio, you are treated to a hospitality-first experience. Noise-canceling headphones, aromatherapy, and the latest in minimally invasive tech.</p>
-            
+            <span class="section-subtitle" data-i18n="exp.sub">Why Ivory Studio?</span>
+            <h2 class="section-title" data-i18n="exp.title">Dentistry Without The Anxiety.</h2>
+            <p data-i18n="exp.text">We believe a visit to the dentist shouldn't feel clinical. From the moment you walk into our studio, you are treated to a hospitality-first experience. Noise-canceling headphones, aromatherapy, and the latest in minimally invasive tech.</p>
             <ul class="exp-list">
-                <li><i class="fas fa-check"></i> 3D Intraoral Scanning (No messy impressions)</li>
-                <li><i class="fas fa-check"></i> Guided Biofilm Therapy for gentle cleanings</li>
-                <li><i class="fas fa-check"></i> VIP Relaxation Rooms post-treatment</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="exp.l1">3D Intraoral Scanning (No messy impressions)</span></li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="exp.l2">Guided Biofilm Therapy for gentle cleanings</span></li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="exp.l3">VIP Relaxation Rooms post-treatment</span></li>
             </ul>
         </div>
     </section>
 
     <section id="gallery" class="gallery">
-        <span class="section-subtitle">Real Results</span>
-        <h2 class="section-title">The Smile Gallery</h2>
-        
-        <div class="gallery-grid">
-            <div class="gallery-item reveal">
-                <div class="gallery-placeholder">
-                    <i class="fas fa-camera"></i>
-                    <span>Example Case Image</span>
-                </div>
-                <div class="gallery-overlay">
-                    <h3>Porcelain Veneers</h3>
-                    <p>8 Units - Upper Arch</p>
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle" data-i18n="gal.sub">Before &amp; After</span>
+                <h2 class="section-title" data-i18n="gal.title">The Smile Gallery</h2>
+                <p data-i18n="gal.text">Drag the handle to compare. Images are illustrative examples.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <figure class="case reveal">
+                    <div class="ba" dir="ltr">
+                        <img class="ba-after" src="https://unsplash.com/photos/4lxmfcXKWc4/download?force=true&amp;w=900" alt="Close-up of a bright, even smile after porcelain veneers (illustrative)" data-i18n-attr="alt:gal.1.after" loading="lazy" decoding="async">
+                        <div class="ba-before-wrap"><img class="ba-before" src="https://unsplash.com/photos/4lxmfcXKWc4/download?force=true&amp;w=900" alt="The same smile before veneers, with dull, discoloured front teeth (illustrative)" data-i18n-attr="alt:gal.1.before" loading="lazy" decoding="async"></div>
+                        <span class="ba-tag ba-tag-before" data-i18n="gal.before">Before</span>
+                        <span class="ba-tag ba-tag-after" data-i18n="gal.after">After</span>
+                        <div class="ba-handle" aria-hidden="true"><span><svg class="icon"><use href="#i-compare"/></svg></span></div>
+                        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: Porcelain Veneers" data-i18n-attr="aria-label:gal.1.range">
+                        <div class="ba-fallback" aria-hidden="true"><div><svg class="icon"><use href="#i-camera"/></svg><span data-i18n="gal.fallback">Case photos coming soon</span></div></div>
+                    </div>
+                    <figcaption><h3 data-i18n="gal.1.title">Porcelain Veneers</h3><p data-i18n="gal.1.meta">8 units · upper arch</p></figcaption>
+                </figure>
+
+                <figure class="case reveal" style="transition-delay: 0.1s;">
+                    <div class="ba" dir="ltr">
+                        <img class="ba-after" src="https://unsplash.com/photos/glPVwPr1FKo/download?force=true&amp;w=900" alt="Close-up of noticeably whiter teeth after one laser whitening session (illustrative)" data-i18n-attr="alt:gal.2.after" loading="lazy" decoding="async">
+                        <div class="ba-before-wrap"><img class="ba-before" src="https://unsplash.com/photos/glPVwPr1FKo/download?force=true&amp;w=900" alt="The same teeth before whitening, with yellow staining (illustrative)" data-i18n-attr="alt:gal.2.before" loading="lazy" decoding="async"></div>
+                        <span class="ba-tag ba-tag-before" data-i18n="gal.before">Before</span>
+                        <span class="ba-tag ba-tag-after" data-i18n="gal.after">After</span>
+                        <div class="ba-handle" aria-hidden="true"><span><svg class="icon"><use href="#i-compare"/></svg></span></div>
+                        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: Laser Whitening" data-i18n-attr="aria-label:gal.2.range">
+                        <div class="ba-fallback" aria-hidden="true"><div><svg class="icon"><use href="#i-camera"/></svg><span data-i18n="gal.fallback">Case photos coming soon</span></div></div>
+                    </div>
+                    <figcaption><h3 data-i18n="gal.2.title">Laser Whitening</h3><p data-i18n="gal.2.meta">1 hour session</p></figcaption>
+                </figure>
+
+                <figure class="case reveal" style="transition-delay: 0.2s;">
+                    <div class="ba" dir="ltr">
+                        <img class="ba-after" src="https://unsplash.com/photos/mEZ3PoFGs_k/download?force=true&amp;w=900" alt="Smiling woman with straight, bright teeth after Invisalign (illustrative)" data-i18n-attr="alt:gal.3.after" loading="lazy" decoding="async">
+                        <div class="ba-before-wrap"><img class="ba-before" src="https://unsplash.com/photos/mEZ3PoFGs_k/download?force=true&amp;w=900" alt="The same smile before Invisalign treatment (illustrative)" data-i18n-attr="alt:gal.3.before" loading="lazy" decoding="async"></div>
+                        <span class="ba-tag ba-tag-before" data-i18n="gal.before">Before</span>
+                        <span class="ba-tag ba-tag-after" data-i18n="gal.after">After</span>
+                        <div class="ba-handle" aria-hidden="true"><span><svg class="icon"><use href="#i-compare"/></svg></span></div>
+                        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: Invisalign" data-i18n-attr="aria-label:gal.3.range">
+                        <div class="ba-fallback" aria-hidden="true"><div><svg class="icon"><use href="#i-camera"/></svg><span data-i18n="gal.fallback">Case photos coming soon</span></div></div>
+                    </div>
+                    <figcaption><h3 data-i18n="gal.3.title">Invisalign</h3><p data-i18n="gal.3.meta">14-month transformation</p></figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section id="book" class="booking">
+        <div class="container booking-grid">
+            <div class="booking-intro reveal">
+                <span class="section-subtitle" data-i18n="book.sub">Book a Consultation</span>
+                <h2 class="section-title" data-i18n="book.title">Your new smile starts here.</h2>
+                <p data-i18n="book.text">Tell us what you're looking for and when suits you. Our patient coordinator will confirm your appointment on WhatsApp.</p>
+                <ul class="booking-perks">
+                    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="book.perk1">Reply within 30 minutes during clinic hours</span></li>
+                    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="book.perk2">Complimentary 3D smile scan on your first visit</span></li>
+                    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="book.perk3">Arabic and English speaking team</span></li>
+                </ul>
+                <div class="booking-contact">
+                    <span data-i18n="book.call">Prefer to call?</span>
+                    <a href="tel:+97140000000" class="ltr">+971 4 000 0000</a>
                 </div>
             </div>
-            <div class="gallery-item reveal" style="transition-delay: 0.1s;">
-                <div class="gallery-placeholder">
-                    <i class="fas fa-camera"></i>
-                    <span>Example Case Image</span>
-                </div>
-                <div class="gallery-overlay">
-                    <h3>Laser Whitening</h3>
-                    <p>1 Hour Session</p>
-                </div>
-            </div>
-            <div class="gallery-item reveal" style="transition-delay: 0.2s;">
-                <div class="gallery-placeholder">
-                    <i class="fas fa-camera"></i>
-                    <span>Example Case Image</span>
-                </div>
-                <div class="gallery-overlay">
-                    <h3>Invisalign</h3>
-                    <p>14 Month Transformation</p>
+
+            <div class="booking-card reveal">
+                <form id="bookingForm" novalidate>
+                    <div class="form-group">
+                        <label for="pat-name" data-i18n="form.name">Full name</label>
+                        <input class="form-control" type="text" id="pat-name" name="name" autocomplete="name" maxlength="60" placeholder="e.g. Sara Al Mansoori" data-i18n-attr="placeholder:form.namePh" aria-describedby="err-name" required>
+                        <p class="field-error" id="err-name" aria-live="polite"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pat-phone" data-i18n="form.phone">Mobile number</label>
+                        <div class="phone-field" dir="ltr">
+                            <span class="phone-prefix" aria-hidden="true">🇦🇪 +971</span>
+                            <input class="form-control" type="tel" id="pat-phone" name="phone" autocomplete="tel-national" inputmode="tel" maxlength="20" placeholder="50 123 4567" aria-describedby="hint-phone err-phone" required>
+                        </div>
+                        <p class="field-hint" id="hint-phone" data-i18n="form.phoneHint">UAE mobile or landline, e.g. <span class="ltr">050 123 4567</span></p>
+                        <p class="field-error" id="err-phone" aria-live="polite"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pat-treatment" data-i18n="form.treatment">Treatment</label>
+                        <select class="form-control" id="pat-treatment" name="treatment" aria-describedby="err-treatment" required>
+                            <option value="" disabled selected data-i18n="form.treatmentPh">Select a treatment…</option>
+                            <option value="veneers" data-i18n="opt.veneers">Smile Design (Veneers)</option>
+                            <option value="invisalign" data-i18n="opt.invisalign">Invisalign &amp; Ortho</option>
+                            <option value="implants" data-i18n="opt.implants">Implantology</option>
+                            <option value="whitening" data-i18n="opt.whitening">Laser Whitening</option>
+                            <option value="endo" data-i18n="opt.endo">Painless Endodontics (Root Canal)</option>
+                            <option value="kids" data-i18n="opt.kids">Pediatric Dentistry</option>
+                        </select>
+                        <p class="field-error" id="err-treatment" aria-live="polite"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pat-date" data-i18n="form.date">Preferred date</label>
+                        <input class="form-control" type="date" id="pat-date" name="date" aria-describedby="err-date" required>
+                        <p class="field-error" id="err-date" aria-live="polite"></p>
+                    </div>
+
+                    <fieldset class="form-group">
+                        <legend data-i18n="form.time">Preferred time</legend>
+                        <div class="segmented" role="radiogroup" aria-describedby="err-time">
+                            <label class="seg-option"><input type="radio" name="time" value="morning"><span><strong data-i18n="time.morning">Morning</strong><small data-i18n="time.morning.h">9 AM – 12 PM</small></span></label>
+                            <label class="seg-option"><input type="radio" name="time" value="afternoon"><span><strong data-i18n="time.afternoon">Afternoon</strong><small data-i18n="time.afternoon.h">12 – 4 PM</small></span></label>
+                            <label class="seg-option"><input type="radio" name="time" value="evening"><span><strong data-i18n="time.evening">Evening</strong><small data-i18n="time.evening.h">4 – 9 PM</small></span></label>
+                        </div>
+                        <p class="field-error" id="err-time" aria-live="polite"></p>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label for="pat-note"><span data-i18n="form.note">Note</span> <span class="optional" data-i18n="form.optional">(optional)</span></label>
+                        <textarea class="form-control" id="pat-note" name="note" rows="3" maxlength="300" placeholder="Anything we should know? e.g. sensitivity, a previous treatment" data-i18n-attr="placeholder:form.notePh"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+                        <span data-i18n="form.submit">Send request via WhatsApp</span>
+                    </button>
+                    <p class="form-privacy" data-i18n="form.privacy">We only use your details to arrange your appointment.</p>
+                </form>
+
+                <div class="booking-success" id="bookingSuccess" hidden tabindex="-1" aria-live="polite">
+                    <div class="success-icon"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></div>
+                    <h3 id="successTitle"></h3>
+                    <p data-i18n="ok.text">WhatsApp is opening with your booking details. Just press send and our coordinator will confirm your appointment.</p>
+                    <dl class="success-summary" id="successSummary"></dl>
+                    <div class="success-actions">
+                        <a class="btn-submit" id="successWa" href="#" target="_blank" rel="noopener">
+                            <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+                            <span data-i18n="ok.again">Open WhatsApp again</span>
+                        </a>
+                        <button type="button" class="btn-link" id="bookAnother" data-i18n="ok.another">Make another booking</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="contact">
+    <section id="contact" class="visit">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle" data-i18n="visit.sub">Visit Us</span>
+                <h2 class="section-title" data-i18n="visit.title">Find the Studio</h2>
+                <p data-i18n="visit.text">Steps from the beach in Jumeirah 1, with easy parking and a calm waiting lounge.</p>
+            </div>
+            <div class="visit-grid">
+                <div class="map-wrap reveal">
+                    <iframe id="mapFrame" title="Map of Jumeirah Beach Road, Jumeirah 1, Dubai" data-i18n-attr="title:visit.mapTitle"
+                        src="https://www.google.com/maps?q=Jumeirah+Beach+Road,+Jumeirah+1,+Dubai,+UAE&amp;z=14&amp;hl=en&amp;output=embed"
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                </div>
+                <div class="visit-card reveal">
+                    <div class="visit-item">
+                        <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                        <div>
+                            <h3 data-i18n="visit.address">Address</h3>
+                            <p data-i18n="visit.addressText">Jumeirah Beach Road, Jumeirah 1, Dubai, UAE</p>
+                            <a class="directions" href="https://www.google.com/maps/search/?api=1&amp;query=Jumeirah+Beach+Road+Jumeirah+1+Dubai" target="_blank" rel="noopener"><span data-i18n="visit.directions">Get directions</span><svg class="icon icon-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="visit-item">
+                        <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+                        <div>
+                            <h3 data-i18n="visit.phone">Phone &amp; WhatsApp</h3>
+                            <a href="tel:+97140000000" class="ltr">+971 4 000 0000</a>
+                        </div>
+                    </div>
+                    <div class="visit-item">
+                        <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
+                        <div>
+                            <h3 data-i18n="visit.email">Email</h3>
+                            <a href="mailto:hello@ivorydental.example">hello@ivorydental.example</a>
+                        </div>
+                    </div>
+                    <div class="visit-item">
+                        <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
+                        <div>
+                            <h3 data-i18n="visit.hours">Clinic hours</h3>
+                            <dl class="hours">
+                                <div><dt data-i18n="hours.weekdays">Monday – Saturday</dt><dd data-i18n="hours.weekdaysTime">9:00 AM – 9:00 PM</dd></div>
+                                <div><dt data-i18n="hours.sunday">Sunday</dt><dd data-i18n="hours.sundayTime">10:00 AM – 6:00 PM</dd></div>
+                            </dl>
+                            <p class="hours-note" data-i18n="hours.note">Open on Fridays · Free patient parking</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <a href="#" class="logo-container" style="margin-bottom: 20px; display: inline-flex;">
-                    <svg class="logo-svg" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="6">
+                <a href="#home" class="logo-container" style="margin-bottom: 20px; display: inline-flex;" aria-label="Ivory Dental Studio home" data-i18n-attr="aria-label:nav.homeLabel">
+                    <svg class="logo-svg" viewBox="0 0 100 100" fill="none" stroke="#D4AF37" stroke-width="6" aria-hidden="true">
                         <path d="M30 30 C 30 15, 50 15, 55 20 C 60 15, 80 15, 80 30 C 80 45, 70 60, 65 80 C 63 90, 47 90, 45 80 C 40 60, 30 45, 30 30 Z" />
                         <line x1="30" y1="15" x2="30" y2="85" />
                     </svg>
-                    <div class="logo-text" style="color: var(--text-main);">Ivory<span>.</span></div>
+                    <div class="logo-text">Ivory<span>.</span></div>
                 </a>
-                <p style="line-height: 1.6;">Elevating the standard of dental care through artistry, technology, and compassion.</p>
+                <p data-i18n="footer.tagline">Elevating the standard of dental care through artistry, technology, and compassion.</p>
             </div>
-            
             <div class="footer-col">
-                <h3>Contact Us</h3>
-                <a href="tel:+15550000000"><i class="fas fa-phone"></i> <span>+1 (555) 000-0000</span></a>
-                <a href="mailto:info@yourclinicdomain.com"><i class="fas fa-envelope"></i> <span class="wrap-text">info@yourclinicdomain.com</span></a>
-                <p><i class="fas fa-map-marker-alt"></i> <span>Your City, Your Country</span></p>
+                <h3 data-i18n="footer.explore">Explore</h3>
+                <ul class="footer-links">
+                    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+                    <li><a href="#experience" data-i18n="nav.experience">The Experience</a></li>
+                    <li><a href="#gallery" data-i18n="nav.gallery">Smile Gallery</a></li>
+                    <li><a href="#book" data-i18n="nav.book">Book Consult</a></li>
+                </ul>
             </div>
-            
             <div class="footer-col">
-                <h3>Clinic Hours</h3>
-                <p>Saturday - Thursday</p>
-                <p style="color: var(--text-main); font-weight: 600;">10:00 AM - 10:00 PM</p>
-                <p>Friday: Closed</p>
+                <h3 data-i18n="footer.contact">Contact Us</h3>
+                <div class="footer-contact">
+                    <a href="tel:+97140000000"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span class="ltr">+971 4 000 0000</span></a>
+                    <a href="mailto:hello@ivorydental.example"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>hello@ivorydental.example</span></a>
+                    <p><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="visit.addressText">Jumeirah Beach Road, Jumeirah 1, Dubai, UAE</span></p>
+                </div>
             </div>
-            
             <div class="footer-col">
-                <h3>Follow Us</h3>
-                <div style="display: flex; gap: 15px; margin-top: 10px;">
-                    <a href="#" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 50%;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 50%;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 50%;"><i class="fab fa-tiktok"></i></a>
+                <h3 data-i18n="footer.follow">Follow Us</h3>
+                <div class="footer-social">
+                    <a class="social-btn" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a>
+                    <a class="social-btn" href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg class="icon"><use href="#i-facebook"/></svg></a>
+                    <a class="social-btn" href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok"><svg class="icon"><use href="#i-tiktok"/></svg></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Ivory Dental Studio. All rights reserved.</p>
+            <p data-i18n="footer.copy">&copy; 2026 Ivory Dental Studio. All rights reserved.</p>
+            <p data-i18n="footer.model">3D tooth: <a href="https://lifesciencedb.jp/bp3d/" target="_blank" rel="noopener">BodyParts3D</a> © 2008 DBCLS, <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en" target="_blank" rel="noopener">CC BY-SA 2.1 JP</a></p>
+            <p class="concept-note" data-i18n="footer.concept">Concept project designed and built by <a href="https://ahmedeldabah.github.io/Resume/" target="_blank" rel="noopener">Ahmed Eldabah</a> — not a real clinic.</p>
         </div>
     </footer>
 
-    <div class="modal-overlay" id="bookingModal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" onclick="closeModal()"></i>
-            <div class="modal-header">
-                <h3>Book Your Visit</h3>
-                <p>Fill out the details below to securely request an appointment.</p>
-            </div>
-            
-            <div class="form-group">
-                <label for="pat-name">Full Name</label>
-                <input type="text" id="pat-name" placeholder="E.g., John Smith">
-            </div>
-
-            <div class="form-group">
-                <label for="pat-phone">Phone Number</label>
-                <input type="tel" id="pat-phone" placeholder="E.g., 010xxxxxxxx">
-            </div>
-            
-            <div class="form-group">
-                <label for="pat-service">Service Needed</label>
-                <select id="pat-service">
-                    <option value="" disabled selected>Select a treatment...</option>
-                    <option value="General Checkup & Cleaning">General Checkup & Cleaning</option>
-                    <option value="Smile Design / Veneers">Smile Design / Veneers</option>
-                    <option value="Laser Teeth Whitening">Laser Teeth Whitening</option>
-                    <option value="Invisalign / Orthodontics">Invisalign / Orthodontics</option>
-                    <option value="Dental Implants">Dental Implants</option>
-                    <option value="Root Canal / Pain Relief">Root Canal / Pain Relief</option>
-                    <option value="Other Consultation">Other Consultation</option>
-                </select>
-            </div>
-            
-            <div class="date-time-group">
-                <div class="form-group">
-                    <label for="pat-date">Preferred Date</label>
-                    <input type="date" id="pat-date">
-                </div>
-                <div class="form-group">
-                    <label for="pat-time">Time Slot</label>
-                    <select id="pat-time">
-                        <option value="" disabled selected>Select time...</option>
-                        <option value="Morning (10 AM - 2 PM)">Morning (10 AM - 2 PM)</option>
-                        <option value="Afternoon (2 PM - 6 PM)">Afternoon (2 PM - 6 PM)</option>
-                        <option value="Evening (6 PM - 10 PM)">Evening (6 PM - 10 PM)</option>
-                    </select>
-                </div>
-            </div>
-            
-            <button type="button" class="btn-submit" onclick="submitBooking()">
-                <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Submit & Open WhatsApp
-            </button>
-        </div>
-    </div>
+    <a class="wa-float wa-link" id="waFloat" href="https://wa.me/97140000000" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" data-i18n-attr="aria-label:wa.float">
+        <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+    </a>
 
     <script>
-        // 1. Preloader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').style.opacity = '0';
-                document.getElementById('preloader').style.visibility = 'hidden';
-            }, 2500);
-        });
+    (function () {
+        'use strict';
 
-        // 2. Navbar Scroll Effect
-        const nav = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+        var root = document.documentElement;
+        var LANG_KEY = 'ivory-lang';
+        var WA_NUMBER = '97140000000'; // +971 4 000 0000 (fictional)
+        var MAP_BASE = 'https://www.google.com/maps?q=Jumeirah+Beach+Road,+Jumeirah+1,+Dubai,+UAE&z=14&output=embed&hl=';
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 1. Preloader: hide as soon as the DOM is ready, hard cap ~0.9s
+        var preloader = document.getElementById('preloader');
+        function hidePreloader() { preloader.classList.add('done'); }
+        document.addEventListener('DOMContentLoaded', function () { setTimeout(hidePreloader, 200); });
+        setTimeout(hidePreloader, 900);
+
+        // 2. Translations (English is read from the HTML itself)
+        var AR = {
+            'meta.title': 'استوديو آيفوري لطب الأسنان | عيادة أسنان راقية في جميرا، دبي',
+            'nav.home': 'الرئيسية',
+            'nav.services': 'الخدمات',
+            'nav.experience': 'التجربة',
+            'nav.gallery': 'معرض الابتسامات',
+            'nav.contact': 'تواصل معنا',
+            'nav.book': 'احجز استشارة',
+            'nav.menu': 'فتح القائمة',
+            'nav.homeLabel': 'الصفحة الرئيسية لاستوديو آيفوري لطب الأسنان',
+            'hero.badge': 'استوديو أسنان راقٍ · جميرا، دبي',
+            'hero.title': 'فنّ <em>الابتسامة</em> المثالية.',
+            'hero.text': 'استمتع برعاية أسنان فاخرة وخالية من الألم. يجمع استوديو آيفوري لطب الأسنان بين أحدث تقنيات التجميل وأجواء هادئة تشبه المنتجع.',
+            'cta.book': 'احجز موعدك',
+            'cta.explore': 'اكتشف خدماتنا',
+            'stat.smiles': 'ابتسامة جدّدناها لمرضانا في أنحاء دبي',
+            'stat.years': 'سنوات من الخبرة',
+            'stat.rating': 'تقييم المرضى',
+            'hero.location': 'جميرا 1، دبي',
+            'status.fallback': 'مفتوح 7 أيام في الأسبوع',
+            'chip.a.title': 'التبييض بالليزر',
+            'chip.a.sub': 'جلسة مدتها 60 دقيقة',
+            'chip.a.price': '1,200 درهم',
+            'chip.b.title': 'استشارة زراعة',
+            'chip.b.sub': 'تشمل مسحاً ثلاثي الأبعاد',
+            'chip.b.price': '4,500 درهم',
+
+            'svc.sub': 'خبرتنا',
+            'svc.title': 'رعاية شاملة وتجميلية',
+            'svc.text': 'نقدّم علاجات متخصصة باستخدام أحدث أجهزة التشخيص لضمان الدقة والراحة ونتائج تفوق التوقعات.',
+            'svc.veneers.title': 'تصميم الابتسامة',
+            'svc.veneers.text': 'قشور خزفية ولومينيرز مصممة رقمياً لتنسجم مع ملامح وجهك.',
+            'svc.veneers.price': 'تبدأ من <strong>1,800 درهم</strong> للسن',
+            'svc.invisalign.title': 'إنفزلاين والتقويم',
+            'svc.invisalign.text': 'مصففات شفافة وغير ملحوظة لتقويم أسنانك بأمان وفعالية دون الحاجة إلى التقويم المعدني التقليدي.',
+            'svc.invisalign.price': 'تبدأ من <strong>12,000 درهم</strong>',
+            'svc.implants.title': 'زراعة الأسنان',
+            'svc.implants.text': 'بدائل دائمة وطبيعية المظهر للأسنان المفقودة تُزرع جراحياً لاستعادة الوظيفة والمظهر بالكامل.',
+            'svc.implants.price': 'تبدأ من <strong>4,500 درهم</strong> للزرعة',
+            'svc.whitening.title': 'التبييض بالليزر',
+            'svc.whitening.text': 'تقنية ليزر متقدمة تزيل تصبغات السنين في جلسة واحدة مريحة مدتها ساعة.',
+            'svc.whitening.price': 'تبدأ من <strong>1,200 درهم</strong>',
+            'svc.endo.title': 'علاج العصب بلا ألم',
+            'svc.endo.text': 'علاج قنوات الجذور بمساعدة المجهر مع إعطاء الأولوية لراحتك والحفاظ على أسنانك الطبيعية.',
+            'svc.endo.price': 'تبدأ من <strong>1,500 درهم</strong>',
+            'svc.kids.title': 'طب أسنان الأطفال',
+            'svc.kids.text': 'رعاية وقائية لطيفة وخالية من القلق، مصممة خصيصاً ليحب الأطفال زيارة طبيب الأسنان.',
+            'svc.kids.price': 'الفحص يبدأ من <strong>300 درهم</strong>',
+            'svc.bookThis': 'احجز',
+            'svc.priceNote': 'الأسعار تقديرية وتمثل نقطة البداية. تُحدَّد خطة العلاج والتكلفة النهائية بعد الاستشارة.',
+            'ins.title': 'التأمين المقبول',
+            'ins.note': 'أحضر بطاقة التأمين وسنؤكد تغطيتك قبل بدء العلاج.',
+            'ins.b1': 'فوترة مباشرة',
+            'ins.b2': 'كبرى شركات التأمين في الإمارات',
+            'ins.b3': 'خطط التأمين الدولية',
+            'ins.b4': 'باقات الشركات',
+            'ins.b5': 'تقسيط بدون فوائد',
+
+            'exp.imgAlt': 'غرفة علاج أسنان حديثة بإضاءة هادئة وكرسي للمريض',
+            'exp.badge': 'وعدٌ<br>بلا ألم',
+            'exp.sub': 'لماذا آيفوري؟',
+            'exp.title': 'طب أسنان بلا قلق.',
+            'exp.text': 'نؤمن بأن زيارة طبيب الأسنان لا ينبغي أن تبدو كزيارة عيادة تقليدية. منذ لحظة دخولك إلى الاستوديو تحظى بتجربة قائمة على الضيافة: سماعات عازلة للضوضاء، وروائح عطرية مهدئة، وأحدث التقنيات طفيفة التدخل.',
+            'exp.l1': 'مسح ثلاثي الأبعاد داخل الفم (بدون طبعات مزعجة)',
+            'exp.l2': 'تقنية إزالة الترسبات الموجّهة لتنظيف لطيف',
+            'exp.l3': 'غرف استرخاء VIP بعد العلاج',
+
+            'gal.sub': 'قبل وبعد',
+            'gal.title': 'معرض الابتسامات',
+            'gal.text': 'اسحب المؤشر للمقارنة. الصور أمثلة توضيحية.',
+            'gal.before': 'قبل',
+            'gal.after': 'بعد',
+            'gal.fallback': 'صور الحالات قريباً',
+            'gal.1.title': 'القشور الخزفية',
+            'gal.1.meta': '8 وحدات · الفك العلوي',
+            'gal.1.range': 'قارن قبل وبعد: القشور الخزفية',
+            'gal.1.after': 'لقطة قريبة لابتسامة مشرقة ومتناسقة بعد القشور الخزفية (توضيحية)',
+            'gal.1.before': 'الابتسامة نفسها قبل القشور، بأسنان أمامية باهتة اللون (توضيحية)',
+            'gal.2.title': 'التبييض بالليزر',
+            'gal.2.meta': 'جلسة واحدة لمدة ساعة',
+            'gal.2.range': 'قارن قبل وبعد: التبييض بالليزر',
+            'gal.2.after': 'لقطة قريبة لأسنان أكثر بياضاً بوضوح بعد جلسة تبييض بالليزر (توضيحية)',
+            'gal.2.before': 'الأسنان نفسها قبل التبييض مع تصبغات صفراء (توضيحية)',
+            'gal.3.title': 'إنفزلاين',
+            'gal.3.meta': 'تحوّل خلال 14 شهراً',
+            'gal.3.range': 'قارن قبل وبعد: إنفزلاين',
+            'gal.3.after': 'امرأة تبتسم بأسنان مستقيمة ومشرقة بعد إنفزلاين (توضيحية)',
+            'gal.3.before': 'الابتسامة نفسها قبل علاج إنفزلاين (توضيحية)',
+
+            'book.sub': 'احجز استشارة',
+            'book.title': 'ابتسامتك الجديدة تبدأ من هنا.',
+            'book.text': 'أخبرنا بما تبحث عنه والوقت الذي يناسبك، وسيؤكد منسق المرضى موعدك عبر واتساب.',
+            'book.perk1': 'نرد خلال 30 دقيقة في ساعات العمل',
+            'book.perk2': 'مسح ثلاثي الأبعاد للابتسامة مجاناً في زيارتك الأولى',
+            'book.perk3': 'فريق يتحدث العربية والإنجليزية',
+            'book.call': 'تفضّل الاتصال؟',
+            'form.name': 'الاسم الكامل',
+            'form.namePh': 'مثال: سارة المنصوري',
+            'form.phone': 'رقم الجوال',
+            'form.phoneHint': 'رقم جوال أو هاتف إماراتي، مثال: <span class="ltr">050 123 4567</span>',
+            'form.treatment': 'العلاج',
+            'form.treatmentPh': 'اختر العلاج…',
+            'opt.veneers': 'تصميم الابتسامة (القشور)',
+            'opt.invisalign': 'إنفزلاين والتقويم',
+            'opt.implants': 'زراعة الأسنان',
+            'opt.whitening': 'التبييض بالليزر',
+            'opt.endo': 'علاج العصب بلا ألم',
+            'opt.kids': 'طب أسنان الأطفال',
+            'form.date': 'التاريخ المفضل',
+            'form.time': 'الوقت المفضل',
+            'time.morning': 'صباحاً',
+            'time.morning.h': '9 ص – 12 م',
+            'time.afternoon': 'ظهراً',
+            'time.afternoon.h': '12 – 4 م',
+            'time.evening': 'مساءً',
+            'time.evening.h': '4 – 9 م',
+            'form.note': 'ملاحظة',
+            'form.optional': '(اختياري)',
+            'form.notePh': 'هل هناك ما يجب أن نعرفه؟ مثل حساسية الأسنان أو علاج سابق',
+            'form.submit': 'إرسال الطلب عبر واتساب',
+            'form.privacy': 'نستخدم بياناتك فقط لترتيب موعدك.',
+            'ok.text': 'يتم الآن فتح واتساب مع تفاصيل حجزك. فقط اضغط إرسال وسيؤكد منسقنا موعدك.',
+            'ok.again': 'فتح واتساب مرة أخرى',
+            'ok.another': 'حجز موعد آخر',
+
+            'visit.sub': 'زورونا',
+            'visit.title': 'موقع الاستوديو',
+            'visit.text': 'على بُعد خطوات من الشاطئ في جميرا 1، مع مواقف سهلة وصالة انتظار هادئة.',
+            'visit.mapTitle': 'خريطة شارع جميرا بيتش، جميرا 1، دبي',
+            'visit.address': 'العنوان',
+            'visit.addressText': 'شارع جميرا بيتش، جميرا 1، دبي، الإمارات العربية المتحدة',
+            'visit.directions': 'احصل على الاتجاهات',
+            'visit.phone': 'الهاتف وواتساب',
+            'visit.email': 'البريد الإلكتروني',
+            'visit.hours': 'ساعات العمل',
+            'hours.weekdays': 'الإثنين – السبت',
+            'hours.weekdaysTime': '9:00 ص – 9:00 م',
+            'hours.sunday': 'الأحد',
+            'hours.sundayTime': '10:00 ص – 6:00 م',
+            'hours.note': 'مفتوح يوم الجمعة · مواقف مجانية للمرضى',
+
+            'footer.tagline': 'نرتقي بمعايير رعاية الأسنان من خلال الفن والتقنية والاهتمام الصادق.',
+            'footer.explore': 'استكشف',
+            'footer.contact': 'تواصل معنا',
+            'footer.follow': 'تابعنا',
+            'footer.copy': '&copy; 2026 استوديو آيفوري لطب الأسنان. جميع الحقوق محفوظة.',
+            'footer.concept': 'مشروع تصميمي تجريبي من تصميم وتطوير <a href="https://ahmedeldabah.github.io/Resume/" target="_blank" rel="noopener">Ahmed Eldabah</a> — ليست عيادة حقيقية.',
+            'footer.model': 'نموذج السن ثلاثي الأبعاد: <a href="https://lifesciencedb.jp/bp3d/" target="_blank" rel="noopener">BodyParts3D</a> © 2008 DBCLS، <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en" target="_blank" rel="noopener">CC BY-SA 2.1 JP</a>',
+            'wa.float': 'تواصل معنا عبر واتساب',
+
+            // Strings used only from JS
+            'lang.switch': 'Switch to English',
+            'status.open': 'مفتوح الآن · حتى {t}',
+            'status.opensToday': 'مغلق الآن · نفتح الساعة {t}',
+            'status.opensTomorrow': 'مغلق الآن · نفتح غداً الساعة {t}',
+            'status.today': 'اليوم · {h}',
+            'err.name': 'يرجى إدخال اسمك الكامل.',
+            'err.phoneEmpty': 'يرجى إدخال رقم جوالك.',
+            'err.phone': 'يرجى إدخال رقم إماراتي صحيح، مثل \u2066050 123 4567\u2069.',
+            'err.treatment': 'يرجى اختيار العلاج.',
+            'err.date': 'يرجى اختيار التاريخ المفضل.',
+            'err.datePast': 'يرجى اختيار تاريخ اليوم أو تاريخ لاحق.',
+            'err.dateFar': 'نستقبل الحجوزات حتى 6 أشهر مقدماً.',
+            'err.time': 'يرجى اختيار الوقت المفضل.',
+            'err.sundayEvening': 'نغلق يوم الأحد الساعة 6 مساءً. يرجى اختيار الفترة الصباحية أو فترة الظهيرة.',
+            'err.timePassed': 'انتهت هذه الفترة لليوم. يرجى اختيار فترة لاحقة أو يوم آخر.',
+            'ok.title': 'شكراً لك، {name}!',
+            'msg.greeting': 'مرحباً استوديو آيفوري لطب الأسنان 👋',
+            'msg.intro': 'أرغب في حجز استشارة:',
+            'msg.name': 'الاسم',
+            'msg.phone': 'الجوال',
+            'msg.treatment': 'العلاج',
+            'msg.date': 'التاريخ المفضل',
+            'msg.time': 'الوقت المفضل',
+            'msg.note': 'ملاحظة',
+            'msg.thanks': 'شكراً لكم!',
+            'wa.hello': 'مرحباً استوديو آيفوري، أود الاستفسار عن موعد.'
+        };
+        var EN = {
+            'lang.switch': 'Switch to Arabic',
+            'status.open': 'Open now · until {t}',
+            'status.opensToday': 'Closed now · opens at {t}',
+            'status.opensTomorrow': 'Closed now · opens tomorrow at {t}',
+            'status.today': 'Today · {h}',
+            'err.name': 'Please enter your full name.',
+            'err.phoneEmpty': 'Please enter your mobile number.',
+            'err.phone': 'Please enter a valid UAE number, e.g. 050 123 4567.',
+            'err.treatment': 'Please choose a treatment.',
+            'err.date': 'Please choose a preferred date.',
+            'err.datePast': 'Please choose today or a later date.',
+            'err.dateFar': 'We take bookings up to 6 months ahead.',
+            'err.time': 'Please choose a preferred time.',
+            'err.sundayEvening': 'On Sundays we close at 6 PM. Please choose morning or afternoon.',
+            'err.timePassed': 'This time has already passed today. Please choose a later slot or another day.',
+            'ok.title': 'Thank you, {name}!',
+            'msg.greeting': 'Hello Ivory Dental Studio 👋',
+            'msg.intro': "I'd like to book a consultation:",
+            'msg.name': 'Name',
+            'msg.phone': 'Mobile',
+            'msg.treatment': 'Treatment',
+            'msg.date': 'Preferred date',
+            'msg.time': 'Preferred time',
+            'msg.note': 'Note',
+            'msg.thanks': 'Thank you!',
+            'wa.hello': "Hello Ivory Dental Studio, I'd like to ask about an appointment."
+        };
+
+        var lang = 'en';
+        var textEls = document.querySelectorAll('[data-i18n]');
+        var attrEls = document.querySelectorAll('[data-i18n-attr]');
+        function attrPairs(el) {
+            return el.getAttribute('data-i18n-attr').split(';').map(function (p) { return p.split(':'); });
+        }
+        textEls.forEach(function (el) { EN[el.getAttribute('data-i18n')] = el.innerHTML; });
+        attrEls.forEach(function (el) {
+            attrPairs(el).forEach(function (p) { EN[p[1]] = el.getAttribute(p[0]) || ''; });
+        });
+        EN['meta.title'] = document.title;
+
+        function t(key) {
+            var dict = lang === 'ar' ? AR : EN;
+            return dict[key] !== undefined ? dict[key] : (EN[key] !== undefined ? EN[key] : key);
+        }
+
+        var langToggle = document.getElementById('langToggle');
+        var mapFrame = document.getElementById('mapFrame');
+
+        function applyLang(next, save) {
+            lang = next === 'ar' ? 'ar' : 'en';
+            root.lang = lang;
+            root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            textEls.forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n')); });
+            attrEls.forEach(function (el) {
+                attrPairs(el).forEach(function (p) { el.setAttribute(p[0], t(p[1])); });
+            });
+            document.title = t('meta.title');
+            langToggle.setAttribute('aria-label', t('lang.switch'));
+            langToggle.querySelectorAll('[data-lang]').forEach(function (s) {
+                s.classList.toggle('on', s.getAttribute('data-lang') === lang);
+            });
+            var mapSrc = MAP_BASE + lang;
+            if (mapFrame.getAttribute('src') !== mapSrc) mapFrame.setAttribute('src', mapSrc);
+            document.querySelectorAll('.wa-link').forEach(function (a) {
+                a.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(t('wa.hello'));
+            });
+            updateStatus();
+            if (attempted) showErrors(currentErrors);
+            if (lastBooking) renderSuccess(lastBooking);
+            if (save) { try { localStorage.setItem(LANG_KEY, lang); } catch (e) {} }
+        }
+
+        langToggle.addEventListener('click', function () { applyLang(lang === 'ar' ? 'en' : 'ar', true); });
+
+        // 3. Live "open now" status in Dubai time
+        function dubaiNow() {
+            var parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Asia/Dubai', year: 'numeric', month: '2-digit', day: '2-digit',
+                weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+            }).formatToParts(new Date());
+            var get = function (type) { return parts.filter(function (p) { return p.type === type; })[0].value; };
+            var days = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+            return { iso: get('year') + '-' + get('month') + '-' + get('day'), dow: days[get('weekday')], mins: (+get('hour') % 24) * 60 + (+get('minute')) };
+        }
+        // Mon–Sat 9 AM–9 PM, Sun 10 AM–6 PM
+        function hoursFor(dow) { return dow === 0 ? [10, 18] : [9, 21]; }
+        function fmtHour(h) {
+            var h12 = h % 12 || 12;
+            if (lang === 'ar') return h12 + ' ' + (h < 12 ? 'ص' : 'م');
+            return h12 + ' ' + (h < 12 ? 'AM' : 'PM');
+        }
+        function localeFor() { return lang === 'ar' ? 'ar-AE-u-nu-latn' : 'en-GB'; }
+
+        var statusWrap = document.getElementById('openStatus');
+        var statusText = document.getElementById('statusText');
+        function updateStatus() {
+            var now = dubaiNow();
+            var h = hoursFor(now.dow);
+            var key, time, open = false;
+            if (now.mins >= h[0] * 60 && now.mins < h[1] * 60) { key = 'status.open'; time = fmtHour(h[1]); open = true; }
+            else if (now.mins < h[0] * 60) { key = 'status.opensToday'; time = fmtHour(h[0]); }
+            else { key = 'status.opensTomorrow'; time = fmtHour(hoursFor((now.dow + 1) % 7)[0]); }
+            statusText.textContent = t(key).replace('{t}', time);
+            statusWrap.classList.toggle('is-open', open);
+            document.getElementById('todayDate').textContent = new Intl.DateTimeFormat(localeFor(), {
+                timeZone: 'Asia/Dubai', weekday: 'long', day: 'numeric', month: 'long'
+            }).format(new Date());
+            document.getElementById('todayHours').textContent = t('status.today').replace('{h}', fmtHour(h[0]) + ' – ' + fmtHour(h[1]));
+        }
+        setInterval(updateStatus, 60000);
+
+        // 4. Navbar scroll effect + mobile menu
+        var nav = document.getElementById('navbar');
+        var navLinks = document.getElementById('navLinks');
+        var hamburger = document.getElementById('hamburger');
+        function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 50); }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        function setMenu(open) {
+            navLinks.classList.toggle('active', open);
+            hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            document.body.classList.toggle('menu-open', open);
+        }
+        hamburger.addEventListener('click', function () { setMenu(!navLinks.classList.contains('active')); });
+        navLinks.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && navLinks.classList.contains('active')) { setMenu(false); hamburger.focus(); } });
+        window.matchMedia('(min-width: 1024px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
+
+        // 5. Scroll reveal
+        var revealEls = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window && !reduceMotion) {
+            var io = new IntersectionObserver(function (entries, obs) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('active');
+                    obs.unobserve(entry.target);
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            revealEls.forEach(function (el) { io.observe(el); });
+        } else {
+            revealEls.forEach(function (el) { el.classList.add('active'); });
+        }
+
+        // 6. Implant: gentle tilt following the pointer (desktop only)
+        var stage = document.getElementById('implantStage');
+        var implantSvg = document.getElementById('implantSvg');
+        if (reduceMotion && implantSvg.pauseAnimations) implantSvg.pauseAnimations();
+        if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+            var hero = document.getElementById('home');
+            var raf = 0;
+            hero.addEventListener('pointermove', function (e) {
+                if (raf) return;
+                raf = requestAnimationFrame(function () {
+                    raf = 0;
+                    var r = hero.getBoundingClientRect();
+                    var x = (e.clientX - r.left) / r.width - 0.5;
+                    var y = (e.clientY - r.top) / r.height - 0.5;
+                    stage.style.setProperty('--tilt-y', (x * 12).toFixed(2) + 'deg');
+                    stage.style.setProperty('--tilt-x', (-y * 8).toFixed(2) + 'deg');
+                });
+            });
+            hero.addEventListener('pointerleave', function () {
+                stage.style.setProperty('--tilt-y', '0deg');
+                stage.style.setProperty('--tilt-x', '0deg');
+            });
+        }
+
+        // 7. Before / after sliders
+        document.querySelectorAll('.ba').forEach(function (ba) {
+            var range = ba.querySelector('.ba-range');
+            var dragging = false;
+            function set(v) { range.value = v; ba.style.setProperty('--pos', range.value + '%'); }
+            function fromPointer(e) {
+                var r = ba.getBoundingClientRect();
+                set(Math.min(100, Math.max(0, (e.clientX - r.left) / r.width * 100)));
             }
-        });
-
-        // 3. Mobile Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        const icon = hamburger.querySelector('i');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            if(navLinks.classList.contains('active')){
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('.nav-links a:not(.btn-book)').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+            range.addEventListener('input', function () { set(range.value); });
+            ba.addEventListener('pointerdown', function (e) { dragging = true; ba.setPointerCapture(e.pointerId); fromPointer(e); });
+            ba.addEventListener('pointermove', function (e) { if (dragging) fromPointer(e); });
+            ba.addEventListener('pointerup', function () { dragging = false; });
+            ba.addEventListener('pointercancel', function () { dragging = false; });
+            set(50);
+            ba.querySelectorAll('img').forEach(function (img) {
+                function fail() { ba.classList.add('is-failed'); }
+                if (img.complete && img.naturalWidth === 0 && img.currentSrc) fail();
+                img.addEventListener('error', fail);
             });
         });
 
-        // 4. Smooth Scroll Reveal
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
-        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); 
+        // 8. Booking form → validated WhatsApp message
+        var form = document.getElementById('bookingForm');
+        var success = document.getElementById('bookingSuccess');
+        var fields = {
+            name: form.elements.name,
+            phone: form.elements.phone,
+            treatment: form.elements.treatment,
+            date: form.elements.date,
+            note: form.elements.note
+        };
+        var timeGroup = form.querySelector('.segmented');
+        var FIELD_ORDER = ['name', 'phone', 'treatment', 'date', 'time'];
+        var attempted = false;
+        var currentErrors = {};
+        var lastBooking = null;
+
+        function addMonths(iso, n) {
+            var p = iso.split('-').map(Number);
+            return new Date(Date.UTC(p[0], p[1] - 1 + n, p[2])).toISOString().slice(0, 10);
+        }
+        function setDateBounds() {
+            fields.date.min = dubaiNow().iso;
+            fields.date.max = addMonths(fields.date.min, 6);
+        }
+        setDateBounds();
+
+        function toLatinDigits(s) {
+            return s.replace(/[٠-٩]/g, function (c) { return c.charCodeAt(0) - 0x0660; })
+                    .replace(/[۰-۹]/g, function (c) { return c.charCodeAt(0) - 0x06F0; });
+        }
+        // Accepts 050 123 4567, 50 123 4567, +971 50 123 4567, 00971…, 04 000 0000 → "+971 50 123 4567"
+        function normalizePhone(raw) {
+            var s = toLatinDigits(raw).replace(/[\s\-().]/g, '');
+            if (!/^\+?\d+$/.test(s)) return null;
+            s = s.replace(/^\+/, '');
+            if (s.indexOf('00971') === 0) s = s.slice(5);
+            else if (s.indexOf('971') === 0 && s.length >= 11) s = s.slice(3);
+            if (s.charAt(0) === '0') s = s.slice(1);
+            if (/^5[024568]\d{7}$/.test(s)) return '+971 ' + s.slice(0, 2) + ' ' + s.slice(2, 5) + ' ' + s.slice(5);
+            if (/^[234679]\d{7}$/.test(s)) return '+971 ' + s.charAt(0) + ' ' + s.slice(1, 4) + ' ' + s.slice(4);
+            return null;
+        }
+        function selectedTime() {
+            var r = form.querySelector('input[name="time"]:checked');
+            return r ? r.value : '';
+        }
+
+        function validate() {
+            var e = {};
+            var name = fields.name.value.trim();
+            if (name.length < 2 || !/\p{L}/u.test(name)) e.name = 'err.name';
+            if (!fields.phone.value.trim()) e.phone = 'err.phoneEmpty';
+            else if (!normalizePhone(fields.phone.value)) e.phone = 'err.phone';
+            if (!fields.treatment.value) e.treatment = 'err.treatment';
+
+            setDateBounds();
+            var date = fields.date.value;
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) e.date = 'err.date';
+            else if (date < fields.date.min) e.date = 'err.datePast';
+            else if (date > fields.date.max) e.date = 'err.dateFar';
+
+            var time = selectedTime();
+            if (!time) e.time = 'err.time';
+            else if (!e.date) {
+                var p = date.split('-').map(Number);
+                var dow = new Date(p[0], p[1] - 1, p[2]).getDay();
+                var close = hoursFor(dow)[1];
+                var slotEnd = { morning: 12, afternoon: 16, evening: 21 }[time];
+                if (dow === 0 && time === 'evening') e.time = 'err.sundayEvening';
+                else if (date === fields.date.min && dubaiNow().mins >= Math.min(slotEnd, close) * 60) e.time = 'err.timePassed';
+            }
+            return e;
+        }
+
+        function showErrors(e) {
+            currentErrors = e;
+            FIELD_ORDER.forEach(function (k) {
+                var msg = document.getElementById('err-' + k);
+                msg.innerHTML = '';
+                if (e[k]) {
+                    msg.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>';
+                    msg.appendChild(document.createTextNode(t(e[k])));
+                }
+                msg.closest('.form-group').classList.toggle('is-invalid', !!e[k]);
+                var target = k === 'time' ? timeGroup : fields[k];
+                target.setAttribute('aria-invalid', e[k] ? 'true' : 'false');
             });
-        }, revealOptions);
-
-        revealElements.forEach(el => revealOnScroll.observe(el));
-
-        // 5. MODAL & DUAL-SEND LOGIC (EMAIL + WHATSAPP)
-        const modal = document.getElementById('bookingModal');
-
-        function openModal() {
-            modal.classList.add('active');
-            navLinks.classList.remove('active');
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
         }
 
-        function closeModal() {
-            modal.classList.remove('active');
+        function revalidate() { if (attempted) showErrors(validate()); }
+        form.addEventListener('input', revalidate);
+        form.addEventListener('change', revalidate);
+
+        function optionLabel(value) {
+            var opt = fields.treatment.querySelector('option[value="' + value + '"]');
+            return opt ? opt.textContent : value;
+        }
+        function timeLabel(value) { return t('time.' + value) + ' (' + t('time.' + value + '.h') + ')'; }
+        function dateLabel(iso) {
+            var p = iso.split('-').map(Number);
+            return new Date(p[0], p[1] - 1, p[2]).toLocaleDateString(localeFor(), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        }
+        function bookingRows(b) {
+            var rows = [
+                ['msg.name', b.name],
+                ['msg.phone', b.phone],
+                ['msg.treatment', optionLabel(b.treatment)],
+                ['msg.date', dateLabel(b.date)],
+                ['msg.time', timeLabel(b.time)]
+            ];
+            if (b.note) rows.push(['msg.note', b.note]);
+            return rows;
+        }
+        function whatsappUrl(b) {
+            var isAr = lang === 'ar';
+            var lines = [t('msg.greeting'), t('msg.intro'), ''];
+            bookingRows(b).forEach(function (r) {
+                var v = r[0] === 'msg.phone' && isAr ? '‎' + r[1] : r[1];
+                lines.push('• ' + t(r[0]) + ': ' + v);
+            });
+            lines.push('', t('msg.thanks'));
+            return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
         }
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
+        function renderSuccess(b) {
+            document.getElementById('successTitle').textContent = t('ok.title').replace('{name}', b.name.split(/\s+/)[0]);
+            var dl = document.getElementById('successSummary');
+            dl.innerHTML = '';
+            bookingRows(b).forEach(function (r) {
+                var row = document.createElement('div');
+                var dt = document.createElement('dt');
+                var dd = document.createElement('dd');
+                dt.textContent = t(r[0]);
+                dd.textContent = r[1];
+                if (r[0] === 'msg.phone') dd.className = 'ltr';
+                row.appendChild(dt);
+                row.appendChild(dd);
+                dl.appendChild(row);
+            });
+            document.getElementById('successWa').href = whatsappUrl(b);
+        }
+
+        form.addEventListener('submit', function (ev) {
+            ev.preventDefault();
+            attempted = true;
+            var e = validate();
+            showErrors(e);
+            var first = FIELD_ORDER.filter(function (k) { return e[k]; })[0];
+            if (first) {
+                var el = first === 'time' ? (form.querySelector('input[name="time"]:checked') || form.querySelector('input[name="time"]')) : fields[first];
+                el.focus();
+                return;
+            }
+            lastBooking = {
+                name: fields.name.value.trim().replace(/\s+/g, ' '),
+                phone: normalizePhone(fields.phone.value),
+                treatment: fields.treatment.value,
+                date: fields.date.value,
+                time: selectedTime(),
+                note: fields.note.value.trim()
+            };
+            var url = whatsappUrl(lastBooking);
+            window.open(url, '_blank', 'noopener');
+            renderSuccess(lastBooking);
+            form.hidden = true;
+            success.hidden = false;
+            success.focus({ preventScroll: true });
+            success.closest('.booking-card').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
         });
 
-        function submitBooking() {
-            const nameInput = document.getElementById('pat-name');
-            const phoneInput = document.getElementById('pat-phone'); // New
-            const serviceInput = document.getElementById('pat-service');
-            const dateInput = document.getElementById('pat-date');
-            const timeInput = document.getElementById('pat-time'); // New
-            
-            const name = nameInput.value.trim();
-            const phoneVal = phoneInput.value.trim(); // New
-            const service = serviceInput.value;
-            const date = dateInput.value;
-            const timeVal = timeInput.value; // New
+        document.getElementById('bookAnother').addEventListener('click', function () {
+            form.reset();
+            attempted = false;
+            lastBooking = null;
+            showErrors({});
+            success.hidden = true;
+            form.hidden = false;
+            fields.name.focus();
+        });
 
-            // Form Validation
-            if (!name) {
-                alert("Please enter your Full Name.");
-                nameInput.focus();
-                return;
-            }
-            if (!phoneVal) {
-                alert("Please enter your Phone Number.");
-                phoneInput.focus();
-                return;
-            }
-            if (!service) {
-                alert("Please select a Service Needed.");
-                serviceInput.focus();
-                return;
-            }
+        // "Book" links on service cards pre-select the treatment
+        document.querySelectorAll('[data-treatment]').forEach(function (a) {
+            a.addEventListener('click', function () {
+                fields.treatment.value = a.getAttribute('data-treatment');
+                revalidate();
+            });
+        });
 
-            // --- PART 1: SEND BACKGROUND EMAIL VIA FORMSPREE ---
-            // TODO: Replace the Formspree URL below with your own endpoint from https://formspree.io
-            const formData = new FormData();
-            formData.append("Patient Name", name);
-            formData.append("Patient Phone", phoneVal);
-            formData.append("Service Requested", service);
-            formData.append("Preferred Date", date ? date : 'Flexible');
-            formData.append("Preferred Time", timeVal ? timeVal : 'Flexible');
+        // 9. Initial language (saved choice, otherwise English)
+        var saved = null;
+        try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
+        applyLang(saved === 'ar' ? 'ar' : 'en', false);
+    })();
+    </script>
 
-            fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
-                method: "POST",
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            }).catch(error => console.error("Email API Error:", error));
+    <!-- 3D crown: three.js from jsDelivr; if anything fails the SVG crown simply stays -->
+    <script type="importmap">
+        { "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        } }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
+        const stage = document.getElementById('implantStage');
+        const canvas = document.getElementById('crown3d');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            // --- PART 2: OPEN WHATSAPP ---
-            // TODO: Replace with your clinic's WhatsApp number (country code + number, no spaces or +)
-            const clinicPhone = "YOUR_WHATSAPP_NUMBER";
-            const rawMessage = `Hello Ivory Dental Studio! 🦷\n\nMy name is *${name}*.\nPhone: ${phoneVal}\nI would like to book an appointment for: *${service}*.\n\nPreferred Date: ${date ? date : 'Flexible'}\nPreferred Time: ${timeVal ? timeVal : 'Flexible'}\n\nPlease let me know your availability.`;
-            const encodedMessage = encodeURIComponent(rawMessage);
+        let renderer = null;
+        try {
+            renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
+        } catch (e) { /* no WebGL: keep the SVG crown */ }
 
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            let waUrl = "";
+        if (renderer) {
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 0.9;
 
-            if (isMobile) {
-                waUrl = `whatsapp://send?phone=${clinicPhone}&text=${encodedMessage}`;
-            } else {
-                waUrl = `https://web.whatsapp.com/send?phone=${clinicPhone}&text=${encodedMessage}`;
-            }
+            const scene = new THREE.Scene();
+            scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 
-            const link = document.createElement('a');
-            link.href = waUrl;
-            if (!isMobile) link.target = '_blank'; 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Clear fields and close
-            nameInput.value = '';
-            phoneInput.value = '';
-            serviceInput.value = '';
-            dateInput.value = '';
-            timeInput.value = '';
-            closeModal();
+            const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 20);
+            camera.position.set(0, 1.0, 2.8);
+            camera.lookAt(0, 0.12, 0);
+
+            const key = new THREE.DirectionalLight(0xfff1d6, 3.0);   // warm studio key
+            key.position.set(-2.2, 2.6, 1.6);
+            const rim = new THREE.DirectionalLight(0x7fa6ff, 3.2);   // navy-blue rim, like the hero glow
+            rim.position.set(2.5, 1.2, -2.5);
+            scene.add(key, rim, new THREE.HemisphereLight(0xdbe6ff, 0x0f172a, 0.25));
+
+            const pivot = new THREE.Group();
+            scene.add(pivot);
+
+            const resize = () => {
+                const w = canvas.clientWidth, h = canvas.clientHeight;
+                if (!w || !h) return;
+                renderer.setSize(w, h, false);
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                if (!running) renderer.render(scene, camera);
+            };
+
+            const clock = new THREE.Clock();
+            let introStart = 0;
+            let running = false;
+            let onScreen = true;
+
+            const frame = () => {
+                const t = clock.getElapsedTime();
+                const p = reduceMotion ? 1 : Math.min(1, (t - introStart) / 1.4);
+                const drop = 1 - Math.pow(1 - p, 3);
+                const hover = reduceMotion ? 0 : (1 - Math.cos(t * Math.PI * 2 / 9)) * 0.06;
+                pivot.position.y = (1 - drop) * 0.9 + hover;
+                pivot.rotation.y = -0.5 + (reduceMotion ? 0 : t * 0.32);
+                pivot.rotation.z = reduceMotion ? 0 : Math.sin(t * 0.7) * 0.04;
+                renderer.render(scene, camera);
+            };
+            const updateLoop = () => {
+                running = !reduceMotion && onScreen && !document.hidden && pivot.children.length > 0;
+                renderer.setAnimationLoop(running ? frame : null);
+            };
+
+            new GLTFLoader().load('assets/molar-crown.glb', (gltf) => {
+                let mesh = null;
+                gltf.scene.traverse((o) => { if (o.isMesh) mesh = o; });
+                if (!mesh) return;
+                mesh.geometry = toCreasedNormals(mesh.geometry, Math.PI / 4); // keeps the cut margin crisp
+                // Glossy ceramic. No clearcoat: it draws a dark seam along the molar's fissures.
+                mesh.material = new THREE.MeshPhysicalMaterial({
+                    color: 0xEFEBE2, roughness: 0.24, specularIntensity: 1, ior: 1.6,
+                    sheen: 0.35, sheenRoughness: 0.5, sheenColor: new THREE.Color(0xdfe8ff), envMapIntensity: 0.45
+                });
+                pivot.add(mesh);
+                introStart = clock.getElapsedTime();
+                resize();
+                frame();
+                stage.classList.add('crown-3d-ready');
+                updateLoop();
+            }, undefined, () => { /* model failed to load: keep the SVG crown */ });
+
+            new ResizeObserver(resize).observe(canvas);
+            new IntersectionObserver((entries) => {
+                onScreen = entries[0].isIntersecting;
+                updateLoop();
+            }).observe(stage);
+            document.addEventListener('visibilitychange', updateLoop);
         }
     </script>
 </body>
